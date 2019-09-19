@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>商品类型管理列表</title>
+    <link rel="stylesheet" href="/assets/plugins/layuiAdmin/layui/css/layui.css">
+    <link rel="stylesheet" href="/assets/styles/admin.css">
+
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <br>
+        <br>
+        <div class="layui-form-item">
+            <div class="layui-inline" style="width: 30%">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-block">
+                    <input  type="text" name="title" id="username" required lay-verify="required"
+                            placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <br><br>
+            <div class="layui-form">
+                <table class="layui-table" lay-even lay-skin="nob">
+                    <colgroup>
+                        <col width="120">
+                        <col>
+                        <col width="120">
+                        <col width="200">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>分类名称</th>
+                        <th>编辑</th>
+                        <th>删除</th>
+
+                    </tr>
+                    </thead>
+                    <tbody id="tbs">
+                    </tbody>
+                </table>
+
+            </div>
+            <div id="demo8"></div>
+        </div>
+    </div>
+</div>
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/plugins/layuiAdmin/layui/layui.js"></script>
+    <script src="/assets/js/index.js"></script>
+<script>
+    $(function () {
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            url: '',
+            success: function (data) {
+                showData(data);
+               ;
+            }
+        })
+        function showData(data) {
+            $("#tbs").empty();
+            var htmlStr = "";
+            for (var i = 0; i < data.list.length; i++) {
+                htmlStr += '<tr><td>';
+                htmlStr += data.list[i].pname;
+                htmlStr += '</td><td>';
+                htmlStr += data.list[i].cname;
+                htmlStr += '</td><td>';
+                htmlStr += '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="编辑" lay-href="/product/edit?pid=' + data.list[i].pid + '">编辑</a>';
+                htmlStr += '</td><td>';
+                htmlStr += '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="删除" lay-href="/product/delProdct?pid=' + data.list[i].pid + '"> 删除</a>\n'
+                htmlStr += '<tr></tr>'
+            }
+            $("#tbs ").append(htmlStr);
+
+        }
+    })
+</script>
+
+</body>
+
+</html>

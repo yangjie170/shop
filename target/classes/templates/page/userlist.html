@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>用户管理列表</title>
+    <link rel="stylesheet" href="/assets/plugins/layuiAdmin/layui/css/layui.css">
+    <link rel="stylesheet" href="/assets/styles/admin.css">
+
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <br>
+        <br>
+        <div class="layui-form-item">
+            <div class="layui-inline" style="width: 30%">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-block">
+                    <input  type="text" name="title" id="username" required lay-verify="required"
+                            placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="查询"   id="cx" > 查询</button>
+            <a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="新增" lay-href="/page/adduser.html"> 新增</a>
+            <br><br>
+<div class="layui-form">
+    <table class="layui-table" lay-even lay-skin="nob">
+    <colgroup>
+        <col width="120">
+        <col>
+        <col width="120">
+        <col width="200">
+    </colgroup>
+    <thead>
+    <tr>
+        <th>用户名</th>
+        <th>用户密码</th>
+        <th>性别</th>
+        <th>名称</th>
+        <th>电话号码</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody id="tbs">
+    </tbody>
+</table>
+
+</div>
+        <div id="demo8"></div>
+</div>
+</div>
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/plugins/layuiAdmin/layui/layui.js"></script>
+<script src="/assets/js/index.js"></script>
+<script>
+    $(function () {
+        queryuser();
+showData();
+    })
+   function queryuser(){
+       layui.use(['laypage', 'layer'], function () {
+           var laypage = layui.laypage
+               , layer = layui.layer;
+           //自定义排版
+           var loading = layer.load(3, {
+               shade: [0.1, '#fff'],
+               time: 2*1000
+           });
+           $.ajax({
+               type: 'post',
+               dataType: 'json',
+               data: {
+                   pn: 1,
+                   pageSize: 10
+               },
+               url: '/user/getUserList',
+               success: function (data) {
+                   showData(data);
+                   laypage.render({
+                       elem: 'demo8'
+                       , count: data.total
+                       , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                       , jump: function (obj) {
+                           //分页切换的回掉
+                           $.ajax({
+                               type: 'post',
+                               dataType: 'json',
+                               data: {
+                                   pn: obj.curr,
+                                   pageSize: obj.limit
+                               },
+                               url: '/user/getUserList',
+                               success: function (data) {
+                                   showData(data);
+                                   layer.close(loading);
+                               }
+                           })
+                       }
+                   });
+
+               }
+           })
+       });
+   }
+    $("#cx").click(function () {
+
+        var username = document.getElementById("username").value;
+        if(username==""){
+            queryuser();
+        }else {
+            layui.use(['laypage', 'layer'], function () {
+                var laypage = layui.laypage
+                    , layer = layui.layer;
+                var loading = layer.load(3, {
+                    shade: [0.1, '#fff'],
+                    time: 2 * 1000
+                });
+                //自定义排版
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        pn: 1,
+                        pageSize: 10,
+                        username: username
+                    },
+                    url: '/user/queryUserByUsername',
+                    success: function (data) {
+                        showData(data);
+                        laypage.render({
+                            elem: 'demo8'
+                            , count: data.total
+                            , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                            , jump: function (obj) {
+                                //分页切换的回掉
+                                $.ajax({
+                                    type: 'post',
+                                    dataType: 'json',
+                                    data: {
+                                        pn: obj.curr,
+                                        pageSize: obj.limit,
+                                        username: username
+                                    },
+                                    url: '/user/queryUserByUsername',
+                                    success: function (data) {
+                                        showData(data);
+                                        layer.close(loading);
+                                    }
+                                })
+                            }
+                        });
+                    }
+                })
+            });
+        }
+    })
+
+
+    function  showData(data) {
+        $("#tbs").empty();
+        var htmlStr = "";
+        for (var i = 0; i < data.list.length; i++) {
+            htmlStr += '<tr><td>';
+            htmlStr += data.list[i].username;
+            htmlStr += '</td><td>';
+            htmlStr += data.list[i].password;
+            htmlStr += '</td><td>';
+            htmlStr += (data.list[i].sex==0?'男':data.list[i].sex==1?'女':'');
+            htmlStr += '</td><td>';
+            htmlStr += data.list[i].name;
+            htmlStr += '</td><td>';
+            htmlStr += data.list[i].telephone;
+            htmlStr += '</td><td>';
+            htmlStr += '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="删除" lay-href="/user/delUser?uid='+data.list[i].uid+'"> 删除</a>\n'+
+                '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="编辑" lay-href="/user/edit?uid='+ data.list[i].uid+'">编辑</a>\n'
+
+        }
+        $("#tbs ").append(htmlStr);
+
+
+    }
+
+
+</script>
+</body>
+</html>

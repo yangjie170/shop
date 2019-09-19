@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>商品后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/assets/plugins/layuiAdmin/layui/css/layui.css">
+    <link rel="stylesheet" href="/assets/styles/admin.css">
+
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card"><br><br>
+        <input  id="uid" type="hidden" th:value="${us.uid}">
+        <form class="layui-form" action="" lay-filter="example">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名：</label>
+                <div class="layui-input-block" style="width: 400px">
+                    <input type="text"  th:value="${us.username}" id="username" name="username" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户密码：</label>
+                <div class="layui-input-block" style="width: 400px">
+                    <input type="text" th:value="${us.password}" id="password" name="password" lay-verify="required" lay-reqtext="用户密码是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别：</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="sex" value="0" title="男" th:checked="${us.sex}==0">
+                    <input type="radio" name="sex" value="1" title="女" th:checked="${us.sex}==1">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">姓名：</label>
+                <div class="layui-input-block" style="width: 400px">
+                    <input type="text" th:value="${us.name}" id="name" name="name" lay-verify="required" lay-reqtext="姓名是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">电话号码：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" th:value="${us.telephone}"id="telephone" name="phone" lay-verify="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn"  lay-submit="" lay-filter="demo1">立即提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/plugins/layuiAdmin/layui/layui.all.js"></script>
+<script src="/assets/js/index.js"></script>
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+
+        form.on('submit(demo1)', function(){
+            var username=$("#username").val();
+            var password=$("#password").val();
+            var name=$("#name").val();
+            var uid=$("#uid").val();
+            var telephone=$("#telephone").val();
+            var sex=$("input[name='sex']:checked").val();
+            var param={uid:uid,username:username,password:password,name:name,sex:sex,telephone:telephone};
+            $.ajax({
+                type: 'post',
+                datatype: 'json',
+                data:param,
+                url: '/user/addUser',
+                success: function (data) {
+                    if(data.code==200){
+                        layer.alert('保存成功',{icon: 1}, function(index){
+                            parent.layui.admin.events.closeThisTabs();
+                            layer.close(index);
+                        });
+                    }
+                    else {
+                        layer.alert('修改失败，请重新修改！',{icon: 2}, function(index){
+                            layer.close(index);
+                        });
+                    }
+
+                    layer.close(loading);
+                }
+            });
+            return false;
+        });
+    });
+    var loading = layer.load(3, {
+        shade: [0.1, '#fff'],
+        time: 1*1000
+    });
+    $("#submit1").click(function () {
+        var username=$("#username").val();
+        var password=$("#password").val();
+        var name=$("#name").val();
+        var telephone=$("#telephone").val();
+        var sex=$("input[name='sex']:checked").val();
+        if(telephone.length>11){
+            alert("'sss")
+        }
+        var param={username:username,password:password,name:name,sex:sex,telephone:telephone};
+        $.ajax({
+            type: 'post',
+            datatype: 'json',
+            data:param,
+            url: '/user/saveUser',
+            success: function (data) {
+                if(data.code==200){
+                    layer.alert('添加成功',{icon: 1}, function(index){
+                        parent.layui.admin.events.closeThisTabs();
+                        layer.close(index);
+                    });
+                }
+                else {
+                    layer.alert('修添加失败，请重新添加！',{icon: 2}, function(index){
+                        layer.close(index);
+                    });
+                }
+
+                layer.close(loading);
+            }
+        });
+    })
+
+
+
+</script>
+
+</body>
+</html>

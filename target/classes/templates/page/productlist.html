@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>商品管理列表</title>
+    <link rel="stylesheet" href="/assets/plugins/layuiAdmin/layui/css/layui.css">
+    <link rel="stylesheet" href="/assets/styles/admin.css">
+
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <br>
+        <br>
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <div class="layui-inline" style="width: 30%">
+                    <label class="layui-form-label">商品名：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" id="storename" required lay-verify="required"
+                               placeholder="请输入商品名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline" style="width: 30%">
+                    <label class="layui-form-label">商品状态：</label>
+                    <div class="layui-input-block">
+                        <select name="status" lay-filter="aihao" id="status">
+                            <option value=""></option>
+                            <option value="0">未下架</option>
+                            <option value="1">已下架</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+            <div class="layui-inline" style="width: 30%">
+                <label class="layui-form-label">商品类型：</label>
+                <div class="layui-input-block">
+                    <select name="type" lay-filter="aihao" id="type">
+                        <option value=""></option>
+                        <option value="1">手机</option>
+                        <option value="2">电脑</option>
+                    </select>
+                </div>
+            </div>
+                <div class="layui-inline" style="width: 30%">
+                    <label class="layui-form-label">商品热门：</label>
+                    <div class="layui-input-block">
+                        <select name="hot" lay-filter="aihao" id="hot">
+                            <option value=""></option>
+                            <option value="0">普通</option>
+                            <option value="1">热门</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-tips="查询" id="cx"> 查询</button>
+        <a type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-tips="新增"
+           lay-href="/page/add_product.html"> 新增</a>
+        <br><br>
+
+        <div class="layui-form">
+            <table class="layui-table" lay-even lay-skin="nob">
+                <colgroup>
+                    <col width="200">
+                    <col width="90">
+                    <col width="90">
+                    <col width="200">
+                    <col width="250">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>商品名</th>
+                    <th>市场价</th>
+                    <th>商城价</th>
+                    <th>商品图片</th>
+                    <th>商品介绍</th>
+                    <th>商品状态</th>
+                    <th>商品类型</th>
+                    <th>日期</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="tbs">
+                </tbody>
+            </table>
+
+        </div>
+        <div id="demo8"></div>
+    </div>
+</div>
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/plugins/layuiAdmin/layui/layui.js"></script>
+<script src="/assets/js/index.js"></script>
+<script>
+    layui.use(['layer', 'form'], function () {
+        var form = layui.form;
+
+    });
+    $(function () {
+        queryproduct();
+        showData();
+    })
+
+    function queryproduct() {
+        layui.use(['laypage', 'layer'], function () {
+            var laypage = layui.laypage
+                , layer = layui.layer;
+            //自定义排版
+            var loading = layer.load(3, {
+                shade: [0.1, '#fff'],
+                time: 2 * 1000
+            });
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    page: 1,
+                    pageSize: 10
+                },
+                url: '/product/getProductList',
+                success: function (data) {
+                    showData(data);
+                    laypage.render({
+                        elem: 'demo8'
+                        , count: data.total
+                        , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                        , jump: function (obj) {
+                            //分页切换的回掉
+                            $.ajax({
+                                type: 'post',
+                                dataType: 'json',
+                                data: {
+                                    page: obj.curr,
+                                    pageSize: obj.limit
+                                },
+                                url: '/product/getProductList',
+                                success: function (data) {
+                                    showData(data);
+                                    layer.close(loading);
+                                }
+                            })
+                        }
+                    });
+                }
+            })
+        });
+    }
+
+    $("#cx").click(function () {
+        var pname = $("#storename").val();
+        var pdesc = $("#status").val();
+        var cid = $("#type").val();
+        var ishot=$("#hot").val();
+        layui.use(['laypage', 'layer'], function () {
+            var laypage = layui.laypage
+                , layer = layui.layer;
+            //自定义排版
+            var loading = layer.load(3, {
+                shade: [0.1, '#fff'],
+                time: 2 * 1000
+            });
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    pname: pname,
+                    pdesc: pdesc,
+                    cid: cid,
+                    ishot:ishot,
+                    pn: 1,
+                    pageSize: 10
+                },
+                url: '/product/queryProductByterm',
+                success: function (data) {
+                    showData(data);
+                    laypage.render({
+                        elem: 'demo8'
+                        , count: data.total
+                        , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                        , jump: function (obj) {
+                            //分页切换的回掉
+                            $.ajax({
+                                type: 'post',
+                                dataType: 'json',
+                                data: {
+                                    pname: pname,
+                                    pdesc: pdesc,
+                                    cid: cid,
+                                    ishot:ishot,
+                                    pn: obj.curr,
+                                    pageSize: obj.limit
+                                },
+                                url: '/product/queryProductByterm',
+                                success: function (data) {
+                                    showData(data);
+                                    layer.close(loading);
+                                }
+                            })
+                        }
+                    });
+
+                }
+            })
+        });
+
+    })
+
+    function showData(data) {
+        $("#tbs").empty();
+        var htmlStr = "";
+        for (var i = 0; i < data.list.length; i++) {
+            if (data.list[i].ishot == 1) {
+                data.list[i].ishot = "热门"
+            } else {
+                data.list[i].ishot = "普通";
+            }
+            htmlStr += '<tr><td>';
+            htmlStr += data.list[i].pname;
+            htmlStr += '<span id="ss" class="layui-badge">';
+            htmlStr += data.list[i].ishot
+            htmlStr += '</span>';
+            htmlStr += '</td><td>';
+            htmlStr += data.list[i].markprice + "$";
+            htmlStr += '</td><td>';
+            htmlStr += data.list[i].shopprice + '$';
+            htmlStr += '</td><td>';
+            htmlStr += '<img src=/' + data.list[i].pimage + '>';
+            htmlStr += '</td><td>';
+            htmlStr += data.list[i].detial;
+            htmlStr += '</td><td>';
+            htmlStr += (data.list[i].pdesc == 0 ? "未下架" : "已下架");
+            htmlStr += '</td><td>';
+            htmlStr += data.list[i].cname;
+            htmlStr += '</td><td>';
+            htmlStr += data.list[i].pdate;
+            htmlStr += '</td><td>';
+            htmlStr += '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="删除" lay-href="/product/delProdct?pid=' + data.list[i].pid + '"> 删除</a>\n' +
+                '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="编辑" lay-href="/product/edit?pid=' + data.list[i].pid + '">编辑</a>\n'
+
+        }
+        $("#tbs ").append(htmlStr);
+
+    }
+</script>
+</body>
+</html>

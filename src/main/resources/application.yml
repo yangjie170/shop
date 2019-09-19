@@ -1,0 +1,30 @@
+spring:
+  resources:
+    static-locations:
+      classpath:/static/,classpath:/templates/
+  thymeleaf:
+    prefix: classpath:/templates/
+    cache: false
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  pageSizeZero: true
+  params: count=countSql
+
+#mybatis:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+server:
+  tomcat:
+    basedir=D:/upload:
+  port: 8100
+  servlet:
+    session:
+      timeout: 3600
