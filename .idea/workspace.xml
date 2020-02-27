@@ -1,52 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="07d1c6a2-7d89-49c7-ae8e-6c71cd0d4686" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/shopmanage/controller/IpController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/shopmanage/entity/OderBean.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/shopmanage/service/OderService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/shopmanage/util/HttpUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a7084c7c-2cca-4d14-8eee-8e876c204754.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a7084c7c-2cca-4d14-8eee-8e876c204754.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LoginInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LoginInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/WebConfigure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/WebConfigure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shopmanage/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shopmanage/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shopmanage/controller/UploadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shopmanage/controller/UploadController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shopmanage/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shopmanage/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shopmanage/entity/ProductBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shopmanage/entity/ProductBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shopmanage/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shopmanage/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shopmanage/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shopmanage/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shopmanage/service/impl/UserServiceimpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shopmanage/service/impl/UserServiceimpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shopmanage/util/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shopmanage/util/JwtUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-prd.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-prd.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/blzk.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/blzklogo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/page/add_product.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/page/add_product.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application-prd.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-prd.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Config.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Config.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/LoginInterceptor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopmanage/controller/ProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shopmanage/controller/ProductController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopmanage/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shopmanage/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopmanage/entity/ProductBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shopmanage/entity/ProductBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopmanage/mapper/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shopmanage/mapper/UserMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopmanage/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shopmanage/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shopmanage/util/JwtUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shopmanage/util/JwtUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/blzk.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/blzklogo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/page/add_product.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/page/add_product.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/shop-manage-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/shop-manage-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/shop-manage-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/shop-manage-1.0-SNAPSHOT.jar.original" afterDir="false" />
-    </list>
+    <list default="true" id="07d1c6a2-7d89-49c7-ae8e-6c71cd0d4686" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
@@ -558,12 +513,12 @@
       <workItem from="1580216841877" duration="1313000" />
       <workItem from="1580529553146" duration="236000" />
       <workItem from="1580647796666" duration="309000" />
-      <workItem from="1582785210338" duration="1278000" />
+      <workItem from="1582785210338" duration="2003000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="254810000" />
+    <option name="totallyTimeSpent" value="255535000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
