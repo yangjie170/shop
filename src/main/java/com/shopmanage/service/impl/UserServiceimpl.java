@@ -43,4 +43,10 @@ public class UserServiceimpl implements UserService {
     public Integer delUser(Integer uid) {
         return userMapper.delUser(uid);
     }
+
+    @Override
+    public UserBean login(String username, Integer password) {
+
+            return userMapper.login(username,password);
+    }
 }

@@ -1,0 +1,76 @@
+GET http://localhost:8100/user/getUserList
+
+###
+
+GET http://localhost:8100/user/getUserList
+
+<> 2019-09-30T033125.200.json
+
+###
+
+GET http://localhost:8100/product/edit
+
+<> 2019-09-30T033048.500.json
+
+###
+
+GET http://localhost:8100/product/getProductList
+
+<> 2019-09-30T032924.500.json
+
+###
+
+GET http://localhost:8100/product/getProductList
+
+<> 2019-09-30T032812.200.html
+
+###
+
+GET http://localhost:8100/product/getProductList
+
+<> 2019-09-30T032808.200.html
+
+###
+
+GET http://localhost:8100/product/getProductList
+
+<> 2019-09-30T032806.200.html
+
+###
+
+GET http://localhost:8100/product/getProductList
+
+<> 2019-09-30T032629.200.html
+
+###
+
+GET http://localhost:8100/user/edit
+
+<> 2019-09-30T032602.200.html
+
+###
+
+GET http://localhost:8100/user/updateUser
+
+<> 2019-09-30T032553.200.html
+
+###
+
+GET http://localhost:8100/user/getUserList
+
+<> 2019-09-30T032522.200.html
+
+###
+
+GET http://localhost:8100/user/getUserList
+
+<> 2019-09-30T032430.200.html
+
+###
+
+GET http://localhost:8100/user/edit
+
+<> 2019-09-30T032417.200.html
+
+###
+

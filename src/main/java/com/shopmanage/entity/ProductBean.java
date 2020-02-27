@@ -19,7 +19,7 @@ public class ProductBean extends CategoryBean{
     @DateTimeFormat(pattern = "yyyy-MM-dd" )
     private Date pdate;
     private Integer ishot;
-    private String pdesc;
+    private Integer pdesc;
     private  Integer pflag;
     private  String detial;
     private  Integer cid;

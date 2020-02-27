@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +30,7 @@ public class ProductController {
 
     @RequestMapping("/getProductList")
     @ResponseBody
-     public BlPageInfo getProductList(Integer page,Integer pageSize){
+     public BlPageInfo getProductList(@RequestParam("page") Integer page, @RequestParam("pageSize")Integer pageSize){
         PageInfo<ProductBean> data=  productService.getListProduct(page,pageSize) ;
         BlPageInfo blPageInfo =new BlPageInfo();
         blPageInfo.setTotal(data.getTotal());
@@ -59,7 +60,7 @@ public class ProductController {
      }
     @RequestMapping("/addProduct")
     @ResponseBody
-    public ResponseBean addProduct(ProductBean product){
+    public ResponseBean addProduct(@RequestBody ProductBean product){
         Integer data =productService.addProduct(product);
         ResponseBean<ProductBean> result= new ResponseBean<>();
         if(data==null){
@@ -70,13 +71,16 @@ public class ProductController {
 
     @RequestMapping("/queryProductByterm")
     @ResponseBody
-    public PageInfo queryProductByterm(String pname, Integer pdesc, Integer cid,Integer ishot, @RequestParam(value="pn",defaultValue="1")Integer pn, @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize){
+    public PageInfo queryProductByterm( @RequestBody ProductBean productBean,
+                                       @RequestParam(value="pn",defaultValue="1")Integer pn,
+                                       @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize){
         PageHelper.startPage(pn,pageSize);
-        List<ProductBean> data=productService.queryProductByterm(pname,pdesc,cid,ishot);
+        List<ProductBean> data=productService.queryProductByterm(productBean.getPname(),productBean.getPdesc(),productBean.getCid(),productBean.getIshot());
 //        BlPageInfo<ProductBean>  reullt=new BlPageInfo<>();
         PageInfo pageInfo =new PageInfo(data);
 //        reullt.setList(pageInfo.getList());
 //        reullt.setTotal(pageInfo.getTotal());
+        System.out.println("pageInfo"+pageInfo);
         return  pageInfo;
     }
 

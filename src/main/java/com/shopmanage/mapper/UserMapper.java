@@ -66,4 +66,7 @@ public interface UserMapper {
      */
     @Select("select * from user where uid=#{uid}")
     UserBean getUserByuId(Integer uid);
+
+    @Select("select * from user where username=#{username} and password=#{password}")
+    UserBean login(String username, Integer password);
 }

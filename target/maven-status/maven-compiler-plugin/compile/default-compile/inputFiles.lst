@@ -4,7 +4,9 @@ D:\shopmanage\src\main\java\com\Config.java
 D:\shopmanage\src\main\java\com\shopmanage\service\UserService.java
 D:\shopmanage\src\main\java\com\shopmanage\entity\CategoryBean.java
 D:\shopmanage\src\main\java\com\shopmanage\mapper\ProductMapper.java
+D:\shopmanage\src\main\java\com\shopmanage\util\IpUtil.java
 D:\shopmanage\src\main\java\com\shopmanage\controller\UploadController.java
+D:\shopmanage\src\main\java\com\shopmanage\util\Swagger2Config.java
 D:\shopmanage\src\main\java\com\shopmanage\entity\ProductBean.java
 D:\shopmanage\src\main\java\com\LoginInterceptor.java
 D:\shopmanage\src\main\java\com\WebLogAspect.java
@@ -12,14 +14,17 @@ D:\shopmanage\src\main\java\com\shopmanage\controller\AdminController.java
 D:\shopmanage\src\main\java\com\shopmanage\entity\BaseBean.java
 D:\shopmanage\src\main\java\com\shopmanage\controller\ProductController.java
 D:\shopmanage\src\main\java\com\shopmanage\service\impl\ProductServiceImpl.java
+D:\shopmanage\src\main\java\com\shopmanage\controller\IpController.java
 D:\shopmanage\src\main\java\com\shopmanage\service\ProductService.java
 D:\shopmanage\src\main\java\com\shopmanage\entity\ResponseBean.java
 D:\shopmanage\src\main\java\com\shopmanage\entity\UserBean.java
 D:\shopmanage\src\main\java\com\shopmanage\provider\UserProvider.java
 D:\shopmanage\src\main\java\com\shopmanage\service\impl\UserServiceimpl.java
 D:\shopmanage\src\main\java\com\WebConfigure.java
+D:\shopmanage\src\main\java\com\shopmanage\util\HttpUtil.java
 D:\shopmanage\src\main\java\com\ShopManageApplication.java
 D:\shopmanage\src\main\java\com\shopmanage\service\OderService.java
+D:\shopmanage\src\main\java\com\shopmanage\util\JwtUtil.java
 D:\shopmanage\src\main\java\com\shopmanage\mapper\OderMapper.java
 D:\shopmanage\src\main\java\com\shopmanage\service\impl\OderServiceimpl.java
 D:\shopmanage\src\main\java\com\shopmanage\mapper\UserMapper.java

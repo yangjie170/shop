@@ -1,0 +1,47 @@
+{
+  "total": 10,
+  "list": [
+    {
+      "uid": 70,
+      "username": "lilianga",
+      "password": 123,
+      "name": "lili",
+      "sex": "0",
+      "telephone": 11111
+    },
+    {
+      "uid": 69,
+      "username": "caopeng",
+      "password": 123,
+      "name": "p",
+      "sex": "1",
+      "telephone": 22323232
+    },
+    {
+      "uid": 68,
+      "username": "1",
+      "password": 1,
+      "name": "1",
+      "sex": "1",
+      "telephone": 1
+    },
+    {
+      "uid": 67,
+      "username": "sja",
+      "password": 1323,
+      "name": "dsa",
+      "sex": "0",
+      "telephone": 121313
+    },
+    {
+      "uid": 64,
+      "username": "22",
+      "password": 22,
+      "name": "22",
+      "sex": "0",
+      "telephone": 22
+    }
+  ],
+  "pages": 0,
+  "pageNum": 0
+}

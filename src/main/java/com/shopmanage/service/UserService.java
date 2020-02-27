@@ -12,4 +12,5 @@ public interface UserService {
     List<UserBean> getUserByUsername(String username);
     Integer delUser(Integer uid);
 
+    UserBean login(String username, Integer password);
 }

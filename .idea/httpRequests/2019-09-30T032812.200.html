@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理-登陆</title>
+    <link rel="stylesheet" href="/assets/plugins/layuiAdmin/layui/css/layui.css">
+    <link rel="stylesheet" href="/assets/styles/admin.css">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+<div id="container">
+    <div></div>
+    <div class="admin-login-background">
+        <!--<div class="admin-header">-->
+        <!--<img src="image/ex_logo.png" class="admin-logo">-->
+        <!--</div>-->
+        <form class="layui-form" action="">
+            <div>
+                <i class="layui-icon layui-icon-username admin-icon admin-icon-username"></i>
+                <input type="text" name="username" id="username" placeholder="请输入用户名"
+                       autocomplete="off"
+                       class="layui-input admin-input admin-input-username">
+            </div>
+            <div>
+                <i class="layui-icon layui-icon-password admin-icon admin-icon-password"></i>
+                <input type="password" name="password" id="password"
+                       placeholder="请输入密码"
+                       autocomplete="off"
+                       class="layui-input admin-input">
+            </div>
+
+            <button class="layui-btn admin-button" id="login">登陆</button>
+
+
+        </form>
+    </div>
+</div>
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/plugins/layuiAdmin/layui/layui.all.js"></script>
+<script src="/assets/js/index.js"></script>
+<script>
+    $("#login").click(function () {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        $.ajax({
+            type: "post",
+            data: {userName: username, password: password},
+            url: "/login",
+            success: function (data) {
+                if (data.code == 200) {
+                    window.location.href = "/index.html";
+                } else {
+                    alert("用户名或密码错误");
+                }
+            },
+            error: function (error) {
+                alert("请求失败");
+            }
+        });
+    })
+
+</script>
+</body>
+</html>

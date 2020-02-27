@@ -1,6 +1,7 @@
 package com.shopmanage.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -19,6 +20,9 @@ import java.util.Random;
 @Controller
 @RequestMapping("/upload" )
 public class UploadController {
+
+    @Value("${windows.path}")
+    private String path;
     //图片上传控制器
     @RequestMapping( "/uploadFile" )
     @ResponseBody
@@ -28,13 +32,6 @@ public class UploadController {
         //String str = "";
         JSONObject res = new JSONObject();
         JSONObject resUrl = new JSONObject();
-        //上传文件路径
-       // String path = servletRequest.getServletContext().getRealPath("/upload");
-        String path="D:/shopmanage/src/main/resources/static/products";
-        System.out.println("path地址"+path);
-        System.out.println("文件名称"+file.getOriginalFilename());
-        //上传文件名
-        //上传文件的真实名称
         String name = file.getOriginalFilename();
         //获取后缀名
         String suffixName = name.substring(name.lastIndexOf("."));
@@ -50,15 +47,11 @@ public class UploadController {
         //将上传文件保存到一个目标文档中
         File tempFile = new File(path + File.separator + fileName);
                file.transferTo(tempFile);
-
         resUrl.put("src", tempFile.getPath());
         res.put("code", 0);
         res.put("msg", "");
         model.addAttribute("url",1);
         res.put("data", resUrl);
-        //str = "{\"code\": 0,\"msg\": \"上传成功\",\"data\": {\"src\":\""+path+fileName + "\"}}";
-        System.out.println("res里面的值：");
-        System.out.println(res.toString());
         return res;
     }
 
