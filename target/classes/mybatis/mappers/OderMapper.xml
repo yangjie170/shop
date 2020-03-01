@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.shopmanage.mapper.OderMapper">
+    <!-- parameterType:参数类型,填写实体类的完整名字 -->
+   <insert id="insertOrder" parameterType="com.shopmanage.entity.OderBean">
+       insert into orders values (#{oid},#{ordertime},#{total},#{state},#{address},#{name},#{telephone},#{uid})
+   </insert>
+    <delete id="deleteOrder">
+        delete from orders where oid = #{oid}
+    </delete>
+
+    <update id="updateOrder" parameterType="com.shopmanage.entity.OderBean">
+        update orders set oid = #{oid},ordertime = #{ordertime},total = #{total},state = #{state},address = #{address},name=#{name},telephone = #{telephobe},uid=#{uid}
+    </update>
+
+    <select id="selectByMap" parameterType="com.shopmanage.entity.OderBean" resultMap="OrderOne">
+        select * from orders
+        <where>
+            <if test="oid!=''">oid = #{oid}</if>
+            <if test="ordertime!=null">and ordertime = #{ordertime}</if>
+            <if test="total!=''">and total = #{total}</if>
+            <if test="state!=''">and state =#{state}</if>
+            <if test="address!=null">and address = #{address}</if>
+            <if test="name!=''">and name= #{name}</if>
+            <if test="telephone!=''">and telephone=#{telephone}</if>
+            <if test="uid!=null">and uid= #{uid}</if>
+        </where>
+    </select>
+
+    <select id="selectLikeContent" resultMap="OrderOne">
+        select * from orders where total like concat('%',#{s},'%')
+    </select>
+    <select id="selectAllOrder" resultMap="OrderOne">
+        select * from orders
+    </select>
+
+    <resultMap id="OrderOne" type="com.shopmanage.entity.OderBean">
+        <id column="oid" property="oid"/>
+        <result column="ordertime" property="ordertime"/>
+        <result column="total" property="total"/>
+        <result column="state" property="state"/>
+        <result column="address" property="address"/>
+        <result column="name" property="name"/>
+        <result column="telephone" property="telephone"/>
+        <result column="uid" property="uid"/>
+    </resultMap>
+
+</mapper>

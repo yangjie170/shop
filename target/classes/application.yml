@@ -23,7 +23,7 @@ pagehelper:
 
 server:
   tomcat:
-    basedir=D:/upload:
+    basedir=C:/upload:
   port: 8200
   servlet:
     session:

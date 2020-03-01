@@ -7,7 +7,6 @@ import com.shopmanage.entity.ProductBean;
 import com.shopmanage.entity.ResponseBean;
 import com.shopmanage.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author cp
@@ -25,7 +26,7 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
-    @Autowired
+    @Resource
     private ProductService productService;
 
     @RequestMapping("/getProductList")
@@ -35,14 +36,12 @@ public class ProductController {
         BlPageInfo blPageInfo =new BlPageInfo();
         blPageInfo.setTotal(data.getTotal());
         blPageInfo.setList(data.getList());
-        log.info("blPageInfo"+blPageInfo);
         return blPageInfo;
      }
 
      @RequestMapping("/edit")
       public  String editProduct(Integer pid, Model model){
       ProductBean data=productService.queryProductBypid(pid);
-      log.info("data"+data);
         model.addAttribute("product",data);
         return "page/edit_product.html";
      }
@@ -51,8 +50,12 @@ public class ProductController {
      @ResponseBody
      public ResponseBean updateProduct(ProductBean product){
 
-        Integer data =productService.updateProduct(product);
-        ResponseBean<ProductBean> result= new ResponseBean<>();
+         String[] strs = product.getPimage().split("\\\\");
+         String ss = strs[strs.length-2]+"\\"+strs[strs.length-1];
+         product.setPimage(ss);
+
+         Integer data =productService.updateProduct(product);
+         ResponseBean<ProductBean> result= new ResponseBean<>();
         if(data==null){
             result.setCode(400);
         }
@@ -71,16 +74,17 @@ public class ProductController {
 
     @RequestMapping("/queryProductByterm")
     @ResponseBody
-    public PageInfo queryProductByterm( @RequestBody ProductBean productBean,
+    public PageInfo queryProductByterm(ProductBean productBean,
                                        @RequestParam(value="pn",defaultValue="1")Integer pn,
                                        @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize){
         PageHelper.startPage(pn,pageSize);
         List<ProductBean> data=productService.queryProductByterm(productBean.getPname(),productBean.getPdesc(),productBean.getCid(),productBean.getIshot());
-//        BlPageInfo<ProductBean>  reullt=new BlPageInfo<>();
+        BlPageInfo<ProductBean>  reullt=new BlPageInfo<>();
         PageInfo pageInfo =new PageInfo(data);
-//        reullt.setList(pageInfo.getList());
-//        reullt.setTotal(pageInfo.getTotal());
-        System.out.println("pageInfo"+pageInfo);
+        reullt.setList(pageInfo.getList());
+        reullt.setTotal(pageInfo.getTotal());
+
+ //       System.out.println("pageInfo"+pageInfo);
         return  pageInfo;
     }
 

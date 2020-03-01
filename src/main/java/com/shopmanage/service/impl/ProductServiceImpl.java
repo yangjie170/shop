@@ -8,10 +8,10 @@ import com.shopmanage.entity.ProductBean;
 import com.shopmanage.mapper.ProductMapper;
 import com.shopmanage.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,7 +22,7 @@ import java.util.List;
    @Slf4j
 public class ProductServiceImpl  implements ProductService {
 
-    @Autowired
+    @Resource
     private ProductMapper productMapper;
 
     @Override
@@ -57,7 +57,7 @@ public class ProductServiceImpl  implements ProductService {
         PageHelper.startPage(page,pageSize);
         List<ProductBean> productList= productMapper.getListProduct();
         PageInfo<ProductBean> productInfo= new PageInfo<>(productList);
-        log.info("productInfo"+productInfo);
+
         return productInfo;
     }
 

@@ -90,8 +90,8 @@ public interface ProductMapper {
               "product.detial," +
               "product.cid," +
               "category.cname " +
-              "from product,category " +
-              "where product.cid=category.cid  and pid=#{pid}")
+              "from product, " +
+              "where product.cid=cacategorytegory.cid  and pid=#{pid}")
       ProductBean queryProductBypid(Integer pid);
 
 
