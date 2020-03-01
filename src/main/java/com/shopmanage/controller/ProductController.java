@@ -71,7 +71,7 @@ public class ProductController {
 
     @RequestMapping("/queryProductByterm")
     @ResponseBody
-    public PageInfo queryProductByterm( @RequestBody ProductBean productBean,
+    public PageInfo queryProductByterm(ProductBean productBean,
                                        @RequestParam(value="pn",defaultValue="1")Integer pn,
                                        @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize){
         PageHelper.startPage(pn,pageSize);

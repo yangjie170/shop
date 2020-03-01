@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="07d1c6a2-7d89-49c7-ae8e-6c71cd0d4686" name="Default Changelist" comment="" />
+    <list default="true" id="07d1c6a2-7d89-49c7-ae8e-6c71cd0d4686" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shopmanage/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shopmanage/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/shopmanage/controller/ProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shopmanage/controller/ProductController.class" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
@@ -34,7 +38,20 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/shopmanage/controller/ProductController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="65" column="23" selection-start-line="65" selection-start-column="23" selection-end-line="65" selection-end-column="23" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -115,7 +132,6 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/application.yml" />
         <option value="$PROJECT_DIR$/src/main/java/com/shopmanage/entity/ProductBean.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/shopmanage/controller/ProductController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/shopmanage/service/UserService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/shopmanage/mapper/UserMapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/shopmanage/service/impl/UserServiceimpl.java" />
@@ -123,6 +139,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/shopmanage/controller/UserController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/shopmanage/mapper/ProductMapper.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/page/add_product.html" />
+        <option value="$PROJECT_DIR$/src/main/java/com/shopmanage/controller/ProductController.java" />
       </list>
     </option>
   </component>
@@ -158,6 +175,23 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="shopmanage" type="58d84e3e:PackageViewProjectNode" />
+              <item name="shopmanage" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="shopmanage" type="58d84e3e:PackageViewProjectNode" />
+              <item name="shopmanage" type="616d4139:PackageViewModuleNode" />
+              <item name="templates" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -261,23 +295,6 @@
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="page" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="shopmanage" type="58d84e3e:PackageViewProjectNode" />
-              <item name="shopmanage" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="shopmanage" type="58d84e3e:PackageViewProjectNode" />
-              <item name="shopmanage" type="616d4139:PackageViewModuleNode" />
-              <item name="templates" type="1f31426a:PackageElementNode" />
             </path>
           </expand>
           <select />
@@ -513,12 +530,13 @@
       <workItem from="1580216841877" duration="1313000" />
       <workItem from="1580529553146" duration="236000" />
       <workItem from="1580647796666" duration="309000" />
-      <workItem from="1582785210338" duration="2003000" />
+      <workItem from="1582785210338" duration="6808000" />
+      <workItem from="1583041365390" duration="598000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="255535000" />
+    <option name="totallyTimeSpent" value="260938000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -532,7 +550,7 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25603217" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25938338" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -549,7 +567,7 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.329429" />
       <window_info anchor="bottom" id="FindBugs-IDEA" order="7" weight="0.329429" />
       <window_info anchor="bottom" id="Spring" order="8" weight="0.31960228" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.4648094" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.4648094" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50065106" side_tool="true" weight="0.3465909" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.18181819" />
@@ -558,7 +576,7 @@
       <window_info anchor="bottom" id="Version Control" order="15" weight="0.4692082" />
       <window_info anchor="bottom" id="MyBatis Log" order="16" weight="0.329429" />
       <window_info anchor="bottom" id="Database Console" order="17" weight="0.329429" />
-      <window_info anchor="bottom" id="Run Dashboard" order="18" sideWeight="0.49934897" weight="0.3548387" />
+      <window_info active="true" anchor="bottom" id="Run Dashboard" order="18" sideWeight="0.49934897" visible="true" weight="0.31085044" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -975,16 +993,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/shopmanage/controller/ProductController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1197">
-          <caret line="63" column="57" selection-start-line="63" selection-start-column="57" selection-end-line="63" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/page/product_class.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
@@ -1088,6 +1096,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/shopmanage/controller/ProductController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="65" column="23" selection-start-line="65" selection-start-column="23" selection-end-line="65" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
