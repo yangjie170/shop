@@ -3,8 +3,10 @@ package com.shopmanage.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.shopmanage.entity.BlPageInfo;
+import com.shopmanage.entity.CategoryBean;
 import com.shopmanage.entity.ProductBean;
 import com.shopmanage.entity.ResponseBean;
+import com.shopmanage.service.CategoryService;
 import com.shopmanage.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.List;
+
 
 /**
  * @author cp
@@ -25,8 +29,19 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
-    @Autowired
+    @Resource
     private ProductService productService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+
+    @RequestMapping("/toProductList")
+    public String toProductList(Model model){
+        List<CategoryBean> allCategory = categoryService.getAllCategory();
+        model.addAttribute("categorys",allCategory);
+        return "page/productlist.html";
+    }
 
     @RequestMapping("/getProductList")
     @ResponseBody
@@ -35,15 +50,17 @@ public class ProductController {
         BlPageInfo blPageInfo =new BlPageInfo();
         blPageInfo.setTotal(data.getTotal());
         blPageInfo.setList(data.getList());
-        log.info("blPageInfo"+blPageInfo);
         return blPageInfo;
      }
 
      @RequestMapping("/edit")
       public  String editProduct(Integer pid, Model model){
       ProductBean data=productService.queryProductBypid(pid);
-      log.info("data"+data);
-        model.addAttribute("product",data);
+         List<CategoryBean> allCategory = categoryService.getAllCategory();
+         System.out.println(allCategory);
+         model.addAttribute("categorys",allCategory);
+         System.out.println(data);
+         model.addAttribute("product",data);
         return "page/edit_product.html";
      }
 
@@ -51,8 +68,12 @@ public class ProductController {
      @ResponseBody
      public ResponseBean updateProduct(ProductBean product){
 
-        Integer data =productService.updateProduct(product);
-        ResponseBean<ProductBean> result= new ResponseBean<>();
+         String[] strs = product.getPimage().split("\\\\");
+         String ss = strs[strs.length-2]+"\\"+strs[strs.length-1];
+         product.setPimage(ss);
+
+         Integer data =productService.updateProduct(product);
+         ResponseBean<ProductBean> result= new ResponseBean<>();
         if(data==null){
             result.setCode(400);
         }
@@ -76,11 +97,11 @@ public class ProductController {
                                        @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize){
         PageHelper.startPage(pn,pageSize);
         List<ProductBean> data=productService.queryProductByterm(productBean.getPname(),productBean.getPdesc(),productBean.getCid(),productBean.getIshot());
-//        BlPageInfo<ProductBean>  reullt=new BlPageInfo<>();
+        BlPageInfo<ProductBean>  reullt=new BlPageInfo<>();
         PageInfo pageInfo =new PageInfo(data);
-//        reullt.setList(pageInfo.getList());
-//        reullt.setTotal(pageInfo.getTotal());
-        System.out.println("pageInfo"+pageInfo);
+        reullt.setList(pageInfo.getList());
+        reullt.setTotal(pageInfo.getTotal());
+
         return  pageInfo;
     }
 

@@ -65,26 +65,25 @@
                             <cite>商品管理</cite>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a lay-href="/page/productlist.html">商品详情</a></dd>
+                            <dd><a lay-href="product/toProductList">商品详情</a></dd>
                             <dd><a lay-href="/page/product_class.html">商品分类</a></dd>
                         </dl>
 
                     </li>
                     <li data-name="user" class="layui-nav-item">
-                        <a href="javascript:;" lay-tips="订单管理" lay-direction="2">
+                        <a href="javascript:;" lay-tips="订单管理" lay-direction="">
                             <i class="layui-icon layui-icon-user"></i>
                             <cite>订单管理</cite>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a lay-href="/config/list">订单详情</a></dd>
-                            <dd><a lay-href="/keyword/getList">未支付订单</a></dd>
+                            <dd><a lay-href="/page/orders.html">订单详情</a></dd>
                         </dl>
                     </li>
                     <li data-name="set" class="layui-nav-item">
                         <a href="javascript:;" lay-tips="用户管理" lay-direction="2" lay-href="/page/userlist.html">
                             <i class="layui-icon layui-icon-set"></i>
                             <cite>用户管理</cite>
-                        </a>
+                        </a>`
 
                     </li>
                 </ul>
@@ -114,7 +113,7 @@
         <!-- 主体内容 -->
         <div class="layui-body" id="LAY_app_body">
             <div class="layadmin-tabsbody-item layui-show">
-                <iframe src="/page/productlist.html" frameborder="0" class="layadmin-iframe"></iframe>
+                <iframe src="product/toProductList" frameborder="0" class="layadmin-iframe"></iframe>
             </div>
         </div>
 

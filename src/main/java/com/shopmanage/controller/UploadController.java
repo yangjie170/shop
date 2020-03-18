@@ -30,6 +30,7 @@ public class UploadController {
             throws IOException {
         //如果文件内容不为空，则写入上传路径
         //String str = "";
+
         JSONObject res = new JSONObject();
         JSONObject resUrl = new JSONObject();
         String name = file.getOriginalFilename();
@@ -52,6 +53,7 @@ public class UploadController {
         res.put("msg", "");
         model.addAttribute("url",1);
         res.put("data", resUrl);
+        System.out.println(res);
         return res;
     }
 

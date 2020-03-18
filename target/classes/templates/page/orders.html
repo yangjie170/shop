@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>商品管理列表</title>
+    <link rel="stylesheet" href="/assets/plugins/layuiAdmin/layui/css/layui.css">
+    <link rel="stylesheet" href="/assets/styles/admin.css">
+
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <br>
+        <br>
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <div class="layui-inline" style="width: 30%">
+                    <label class="layui-form-label">订单号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" id="oid" required lay-verify="required"
+                               placeholder="请输入订单号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline" style="width: 30%">
+                    <label class="layui-form-label">订单状态：</label>
+                    <div class="layui-input-block">
+                        <select name="status" lay-filter="aihao" id="state">
+                            <option value=""></option>
+                            <option value="1">已付款</option>
+                            <option value="0">未付款</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline" style="width: 30%">
+                    <label class="layui-form-label">收货人手机号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" id="telephone" required lay-verify="required"
+                               placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline" style="width: 30%">
+                    <label class="layui-form-label">收货人姓名：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" id="name" required lay-verify="required"
+                               placeholder="请输入收货人姓名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+    </div>
+    </form>
+    <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" style="margin-right: 100px" lay-tips="查询" id="cx"> 查询</button>
+         <br><br>
+
+        <div class="layui-form">
+            <table class="layui-table" lay-even lay-skin="nob">
+                <colgroup>
+                    <col width="200">
+                    <col width="90">
+                    <col width="90">
+                    <col width="200">
+                    <col width="250">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>订单号</th>
+                    <th>订单总价</th>
+                    <th>订单状态</th>
+                    <th>订单地址</th>
+                    <th>收货人姓名</th>
+                    <th>收货人电话</th>
+                    <th>发货人id</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="tbs">
+                </tbody>
+            </table>
+
+        </div>
+        <div id="demo8"></div>
+    </div>
+</div>
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/plugins/layuiAdmin/layui/layui.js"></script>
+<script src="/assets/js/index.js"></script>
+<script>
+    layui.use(['layer', 'form'], function () {
+        var form = layui.form;
+
+    });
+    $(function () {
+        queryOrder();
+        showData();
+    })
+
+    function queryOrder() {
+        layui.use(['laypage', 'layer'], function () {
+                var laypage = layui.laypage
+                    , layer = layui.layer;
+                //自定义排版
+                var loading = layer.load(3, {
+                    shade: [0.1, '#fff'],
+                    time: 2 * 1000
+                });
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    pn: 1,
+                    pageSize: 10
+                },
+                url: '/orders/queryAll.do',
+                success: function (data) {
+                    showData(data);
+                    laypage.render({
+                        elem: 'demo8'
+                        , count: data.total
+                        , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                        , jump: function (obj) {
+                            //分页切换的回掉
+                            $.ajax({
+                                type: 'post',
+                                dataType: 'json',
+                                data: {
+                                    pn: obj.curr,
+                                    pageSize: obj.limit
+                                },
+                                url: '/orders/queryAll.do',
+                                success: function (data) {
+                                    showData(data);
+                                    layer.close(loading);
+                                }
+                            })
+                        }
+                    });
+                }
+            })
+        });
+    }
+
+    $("#cx").click(function () {
+        var oid = $("#oid").val();
+        var state = $("#state").val();
+        var telephone = $("#telephone").val();
+        var name=$("#name").val();
+        alert(state)
+        layui.use(['laypage', 'layer'], function () {
+            var laypage = layui.laypage
+                , layer = layui.layer;
+            //自定义排版
+            var loading = layer.load(3, {
+                shade: [0.1, '#fff'],
+                time: 2 * 1000
+            });
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+
+                data: {
+                    oid: oid,
+                    state: state,
+                    telephone: telephone,
+                    name:name,
+                    pn: 1,
+                    pageSize: 10
+                },
+                url: '/orders/selectByMap.do',
+                success: function (data) {
+                    showData(data);
+                    laypage.render({
+                        elem: 'demo8'
+                        , count: data.total
+                        , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                        , jump: function (obj) {
+                            //分页切换的回掉
+                            $.ajax({
+                                type: 'post',
+                                dataType: 'json',
+                                data: {
+                                    oid: oid,
+                                    state: state,
+                                    telephone: telephone,
+                                    name:name,
+                                    pn: obj.curr,
+                                    pageSize: obj.limit
+                                },
+                                url: '/orders/selectByMap.do',
+                                success: function (data) {
+                                    showData(data);
+                                    layer.close(loading);
+                                }
+                            })
+                        }
+                    });
+
+                }
+            })
+        });
+
+    })
+
+    function showData(data) {
+        $("#tbs").empty();
+        var htmlStr = "";
+        for (var i = 0; i < data.list.length; i++) {
+            htmlStr += '<tr><td>';
+            htmlStr += data.list[i].oid;
+            htmlStr += '<span id="ss" class="layui-badge">';
+            htmlStr += data.list[i].ordertime
+            htmlStr += '</span>';
+            htmlStr += '</td><td>';
+            htmlStr +=  "$"+ data.list[i].total;
+            htmlStr += '</td><td>';
+            htmlStr += (data.list[i].state==1?"已付款":"未付款");
+            htmlStr += '</td><td>';
+            htmlStr += data.list[i].address;
+            htmlStr += '</td><td>';
+            htmlStr += data.list[i].name;
+            htmlStr += '</td><td>';
+            htmlStr += data.list[i].telephone;
+            htmlStr += '</td><td>';
+            htmlStr += data.list[i].uid;
+            htmlStr += '</td><td>';
+            htmlStr += '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="编辑" lay-href="/orders/editOrder.do?oid=' + data.list[i].oid + '">编辑</a>'
+        }
+        $("#tbs ").append(htmlStr);
+
+    }
+</script>
+</body>
+</html>

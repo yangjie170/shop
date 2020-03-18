@@ -69,4 +69,12 @@ public interface UserMapper {
 
     @Select("select * from user where username=#{username} and password=#{password}")
     UserBean login(String username, Integer password);
+
+    @Insert("insert into user(username,password,telephone)  values(#{username},#{password},#{telephone})")
+    UserBean register(UserBean user);
+
+
+    @Select("select * from user where username=#{username}")
+    UserBean existUser(UserBean user);
+
 }

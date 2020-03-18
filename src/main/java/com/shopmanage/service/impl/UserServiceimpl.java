@@ -49,4 +49,16 @@ public class UserServiceimpl implements UserService {
 
             return userMapper.login(username,password);
     }
+
+    @Override
+    public UserBean register(UserBean user) {
+        return userMapper.register(user);
+    }
+
+    @Override
+    public UserBean existUser(UserBean user) {
+        return userMapper.existUser(user);
+    }
+
+
 }

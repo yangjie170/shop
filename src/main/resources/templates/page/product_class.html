@@ -15,28 +15,23 @@
         <br>
         <div class="layui-form-item">
             <div class="layui-inline" style="width: 30%">
-                <label class="layui-form-label">用户名</label>
+                <label class="layui-form-label">分类名：</label>
                 <div class="layui-input-block">
-                    <input  type="text" name="title" id="username" required lay-verify="required"
-                            placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                    <input  type="text" name="title" id="cname" required lay-verify="required"
+                            placeholder="请输入分类名" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <br><br>
             <div class="layui-form">
                 <table class="layui-table" lay-even lay-skin="nob">
                     <colgroup>
-                        <col width="120">
-                        <col>
-                        <col width="120">
-                        <col width="200">
+                        <col width="90%">
+                        <col width="10%">
                     </colgroup>
                     <thead>
                     <tr>
-                        <th>id</th>
                         <th>分类名称</th>
-                        <th>编辑</th>
-                        <th>删除</th>
-
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody id="tbs">
@@ -44,6 +39,7 @@
                 </table>
 
             </div>
+            <a type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-tips="添加" id="add"> 添加</a>
             <div id="demo8"></div>
         </div>
     </div>
@@ -52,34 +48,153 @@
     <script src="/assets/plugins/layuiAdmin/layui/layui.js"></script>
     <script src="/assets/js/index.js"></script>
 <script>
+    layui.use(['layer', 'form'], function () {
+        var form = layui.form;
+
+    });
     $(function () {
-        $.ajax({
-            type: 'post',
-            dataType: 'json',
-            url: '',
-            success: function (data) {
-                showData(data);
-               ;
+        queryclass();
+    })
+    function queryclass() {
+        layui.use(['laypage', 'layer'], function () {
+            var laypage = layui.laypage
+                , layer = layui.layer;
+            //自定义排版
+            var loading = layer.load(3, {
+                shade: [0.1, '#fff'],
+                time: 2 * 1000
+            });
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    pn: 1,
+                    pageSize: 10
+                },
+                url: '/category/getAllCategory',
+                success: function (data) {
+                    showData(data);
+                    laypage.render({
+                        elem: 'demo8'
+                        , count: data.total
+                        , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                        , jump: function (obj) {
+                            //分页切换的回掉
+                            $.ajax({
+                                type: 'post',
+                                dataType: 'json',
+                                data: {
+                                    pn: obj.curr,
+                                    pageSize: obj.limit
+                                },
+                                url: '/category/getAllCategory',
+                                success: function (data) {
+                                    showData(data);
+                                    layer.close(loading);
+                                }
+                            })
+                        }
+                    });
+                }
+            })
+        });
+    }
+
+    $("#cx").click(function () {
+        var cname = $("#cname").val();
+        layui.use(['laypage', 'layer'], function () {
+            var laypage = layui.laypage
+                , layer = layui.layer;
+            //自定义排版
+            var loading = layer.load(3, {
+                shade: [0.1, '#fff'],
+                time: 2 * 1000
+            });
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+
+                data: {
+                    cname: cname,
+                    pn: 1,
+                    pageSize: 10
+                },
+                url: '/category/getAllCategory',
+                success: function (data) {
+
+                    showData(data);
+                    laypage.render({
+                        elem: 'demo8'
+                        , count: data.total
+                        , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                        , jump: function (obj) {
+                            //分页切换的回掉
+                            $.ajax({
+                                type: 'post',
+                                dataType: 'json',
+                                data: {
+                                    cname: cname,
+                                    pn: obj.curr,
+                                    pageSize: obj.limit
+                                },
+                                url: '/category/getAllCategory',
+                                success: function (data) {
+                                    showData(data);
+                                    layer.close(loading);
+                                }
+                            })
+                        }
+                    });
+
+                }
+            })
+        });
+
+    })
+    $("#add").click(function () {
+        layer.open({
+            type:1,
+            title:'新增',
+            area:['500px','400px'],
+            btn:true,
+// shade: false,
+            shadeClose: true,
+            maxmin:false,
+            content:"<form class=\"layui-form\" action=\"\">\n" +
+                "    <div class=\"layui-form-item\">\n" +
+                "        <div class=\"layui-inline\" style=\"width: 30%\">\n" +
+                "            <label class=\"layui-form-label\">分类名：</label>\n" +
+                "            <div class=\"layui-input-block\">\n" +
+                "                <input type=\"text\" name=\"title\" id=\"classname\" required lay-verify=\"required\"\n" +
+                "                       placeholder=\"请输入商品名\" autocomplete=\"off\" class=\"layui-input\">\n" +
+                "            </div>\n" +
+                "        </div>\n" +
+                "    </div>\n" +
+                "</form>",
+            zIndex:layer.zIndex
+            ,btn: ['保存'],
+            yes: function(index, layero){
+              alert($("#classname").val())
+                layer.close(index);
             }
-        })
-        function showData(data) {
-            $("#tbs").empty();
-            var htmlStr = "";
-            for (var i = 0; i < data.list.length; i++) {
-                htmlStr += '<tr><td>';
-                htmlStr += data.list[i].pname;
-                htmlStr += '</td><td>';
-                htmlStr += data.list[i].cname;
-                htmlStr += '</td><td>';
-                htmlStr += '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="编辑" lay-href="/product/edit?pid=' + data.list[i].pid + '">编辑</a>';
-                htmlStr += '</td><td>';
-                htmlStr += '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="删除" lay-href="/product/delProdct?pid=' + data.list[i].pid + '"> 删除</a>\n'
-                htmlStr += '<tr></tr>'
-            }
-            $("#tbs ").append(htmlStr);
+        });
+    })
+
+
+    function showData(data) {
+
+        $("#tbs").empty();
+        var htmlStr = "";
+        for (var i = 0; i < data.list.length; i++) {
+            htmlStr += '<tr><td>';
+            htmlStr += data.list[i].cname;
+            htmlStr += '</td><td>';
+            htmlStr += '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="编辑" lay-href="/category/updateCategoryBean?cid=' + data.list[i].cid + '">编辑</a>';
 
         }
-    })
+        $("#tbs ").append(htmlStr);
+
+    }
 </script>
 
 </body>

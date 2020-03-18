@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.shopmanage.mapper.OderMapper">
+    <!-- parameterType:参数类型,填写实体类的完整名字 -->
+   <insert id="insertOrder" parameterType="com.shopmanage.entity.OderBean">
+       insert into orders values (#{oid},#{ordertime},#{total},#{state},#{address},#{name},#{telephone},#{uid})
+   </insert>
+    <delete id="deleteOrder">
+        delete from orders where oid = #{oid}
+    </delete>
+
+    <update id="updateOrder" parameterType="com.shopmanage.entity.OderBean">
+         update orders
+<set>
+
+             <if test="ordertime!=null and ordertime!=null">ordertime = #{ordertime},</if>
+             <if test="total!='' and total!=null">total = #{total},</if>
+             <if test="state!=null"> state =#{state},</if>
+             <if test="address!=null and address!=null">address = #{address},</if>
+             <if test="name!=''and name!=null">name= #{name},</if>
+             <if test="telephone!=''and telephone!=null"> telephone=#{telephone},</if>
+             <if test="uid!=null and uid!=null"> uid= #{uid}</if>
+</set>
+        WHERE oid=#{oid}
+    </update>
+
+    <select id="selectByMap" parameterType="com.shopmanage.entity.OderBean" resultMap="OrderOne">
+        select * from orders
+        where (1=1)
+            <if test="oid!=''and oid!=null"> and oid = #{oid}</if>
+            <if test="ordertime!=null and ordertime!=null">and ordertime = #{ordertime}</if>
+            <if test="total!='' and total!=null">and total = #{total}</if>
+            <if test="state!=null">and state =#{state}</if>
+            <if test="address!=null and address!=null">and address = #{address}</if>
+            <if test="name!=''and name!=null">and name= #{name}</if>
+            <if test="telephone!=''and telephone!=null">and telephone=#{telephone}</if>
+            <if test="uid!=null and uid!=null">and uid= #{uid}</if>
+
+    </select>
+
+    <select id="editOrder" resultType="com.shopmanage.entity.OderBean" >
+        select * from orders where oid=#{oid}
+    </select>
+
+
+    <select id="selectLikeContent" resultMap="OrderOne">
+        select * from orders where total like concat('%',#{s},'%')
+    </select>
+    <select id="selectAllOrder" resultMap="OrderOne">
+        select * from orders
+    </select>
+
+    <resultMap id="OrderOne" type="com.shopmanage.entity.OderBean">
+        <id column="oid" property="oid"/>
+        <result column="ordertime" property="ordertime"/>
+        <result column="total" property="total"/>
+        <result column="state" property="state"/>
+        <result column="address" property="address"/>
+        <result column="name" property="name"/>
+        <result column="telephone" property="telephone"/>
+        <result column="uid" property="uid"/>
+    </resultMap>
+
+</mapper>
