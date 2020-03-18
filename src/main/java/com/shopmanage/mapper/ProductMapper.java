@@ -29,7 +29,7 @@ public interface ProductMapper {
      * 获取product列表
      * @return
      */
-     @Select("select product.pid ,product.pname,product.mark_price,product.shop_price,product.pimage,product.pdate,product.is_hot,product.pdesc,product.pflag ,product.detial,category.cname from product,category where product.cid=category.cid order by pid desc")
+     @Select("select product.pid ,product.pname,product.mark_price,product.shop_price,product.pimage,product.pdate,product.is_hot,product.pdesc,product.pflag ,product.detial,category.cname from product,category where product.cid=category.cid order by pdate desc")
     List<ProductBean> getListProduct();
 
     /**
@@ -75,7 +75,7 @@ public interface ProductMapper {
             "product.cid," +
             "category.cname " +
             "from product,category " +
-            "where  ${content}")
+            "where  ${content} order by pdate desc")
       List<ProductBean> queryProductByterm(@Param("content") String content);
 
       @Select("select product.pid " +
@@ -90,9 +90,12 @@ public interface ProductMapper {
               "product.detial," +
               "product.cid," +
               "category.cname " +
-              "from product, " +
-              "where product.cid=cacategorytegory.cid  and pid=#{pid}")
+              "from product,category " +
+              "where product.cid=category.cid  and pid=#{pid} order by pdate desc")
       ProductBean queryProductBypid(Integer pid);
+
+
+
 
 
 

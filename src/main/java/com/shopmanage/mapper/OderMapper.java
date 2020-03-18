@@ -25,4 +25,6 @@ public interface OderMapper {
 
     //查询所有订单
     List<OderBean> selectAllOrder();
+
+    OderBean editOrder(String oid);
 }

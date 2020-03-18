@@ -24,7 +24,7 @@ pagehelper:
 server:
   tomcat:
     basedir=C:/upload:
-  port: 8200
+  port: 8080
   servlet:
     session:
       timeout: 3600

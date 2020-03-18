@@ -21,4 +21,6 @@ public interface OderService {
     List<OderBean> selectLike(int s);
     //查询所有
     List<OderBean> selectAllOrder();
+
+    OderBean editOrder(String oid);
 }

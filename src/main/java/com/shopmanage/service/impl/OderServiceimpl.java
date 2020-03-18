@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
+
 @Service
 public class OderServiceimpl implements OderService {
 
@@ -43,5 +43,10 @@ public class OderServiceimpl implements OderService {
     @Override
     public List<OderBean> selectAllOrder() {
         return oderMapper.selectAllOrder();
+    }
+
+    @Override
+    public OderBean editOrder(String oid) {
+        return oderMapper.editOrder(oid);
     }
 }

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Objects;
+
 @Api(tags ="UserController",description = "用户信息")
 @Slf4j
 @RequestMapping("/user")
@@ -102,5 +104,59 @@ public class UserController {
         }
         return "page/userlist.html";
     }
+
+    /**
+     *
+     * @param user
+     * @return
+     */
+    @RequestMapping("/login")
+    @ResponseBody
+    public  ResponseBean  login(UserBean user){
+        ResponseBean<UserBean> result= new ResponseBean<>();
+        if(user.getUsername()==null||user.getPassword()==null){
+            result.setMessage("用户名和密码不能为空！");
+        }
+        UserBean login = userService.login(user.getUsername(), user.getPassword());
+        if(login==null){
+            result.setCode(400);
+            result.setMessage("密码不正确，请重新输入密码！");
+        }
+        result.setMessage("登陆成功");
+        return result;
+    }
+
+
+    @RequestMapping("/register")
+    @ResponseBody
+    public  ResponseBean  register(UserBean user){
+        ResponseBean<UserBean> result= new ResponseBean<>();
+        if(user.getUsername()==null){
+            result.setMessage("用户名不能为空！");
+        }
+        if(user.getPassword()==null){
+            result.setMessage("密码不能为空！");
+        }
+        if (user.getTelephone()==null){
+            result.setMessage("手机号不能为空！");
+        }
+        UserBean userBean=userService.existUser(user);
+        if(Objects.isNull(userBean)){
+            result.setCode(400);
+            result.setMessage("用户名已存在！");
+        }
+        UserBean login = userService.register(user);
+        if(login==null){
+            result.setCode(400);
+            result.setMessage("密码不正确，请重新输入密码！");
+        }
+        result.setMessage("注册成功");
+        return result;
+    }
+
+
+
+
+
 
 }

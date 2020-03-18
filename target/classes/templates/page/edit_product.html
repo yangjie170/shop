@@ -46,16 +46,15 @@
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">商品状态：</label>
-                <div class="layui-input-block">
+                <div class="layui-input-block" >
                     <input type="radio" name="type" value="0" title="未下架" th:checked="${product.pdesc}==0">
                     <input type="radio" name="type" value="1" title="已下架" th:checked="${product.pdesc}==1">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">商品类型：</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="cate" value="1" title="手机" th:checked="${product.cid}==1">
-                    <input type="radio" name="cate" value="2" title="电脑" th:checked="${product.cid}==2">
+                <div class="layui-input-block" th:each="category:${categorys}">
+                    <input type="radio" name="cate" th:value="${category.cid}" th:title="${category.cname}" th:checked="${product.cid}==${category.cid}">
                 </div>
             </div>
             <div class="layui-form-item">

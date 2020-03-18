@@ -19,6 +19,6 @@ spring:
 
 
 windows.path:
-  C:\\Users\\yjj\\Desktop\demo33\\demo2\\src\\main\\resources\\static\\products
+  D:\shopmanage\src\main\resources\static\products
 base_url: http://127.0.0.1:8100
 

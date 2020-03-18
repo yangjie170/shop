@@ -13,4 +13,8 @@ public interface UserService {
     Integer delUser(Integer uid);
 
     UserBean login(String username, Integer password);
+
+    UserBean register(UserBean user);
+
+    UserBean existUser(UserBean user);
 }

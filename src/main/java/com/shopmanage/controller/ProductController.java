@@ -3,10 +3,13 @@ package com.shopmanage.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.shopmanage.entity.BlPageInfo;
+import com.shopmanage.entity.CategoryBean;
 import com.shopmanage.entity.ProductBean;
 import com.shopmanage.entity.ResponseBean;
+import com.shopmanage.service.CategoryService;
 import com.shopmanage.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * @author cp
@@ -28,6 +31,17 @@ public class ProductController {
 
     @Resource
     private ProductService productService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+
+    @RequestMapping("/toProductList")
+    public String toProductList(Model model){
+        List<CategoryBean> allCategory = categoryService.getAllCategory();
+        model.addAttribute("categorys",allCategory);
+        return "page/productlist.html";
+    }
 
     @RequestMapping("/getProductList")
     @ResponseBody
@@ -42,7 +56,11 @@ public class ProductController {
      @RequestMapping("/edit")
       public  String editProduct(Integer pid, Model model){
       ProductBean data=productService.queryProductBypid(pid);
-        model.addAttribute("product",data);
+         List<CategoryBean> allCategory = categoryService.getAllCategory();
+         System.out.println(allCategory);
+         model.addAttribute("categorys",allCategory);
+         System.out.println(data);
+         model.addAttribute("product",data);
         return "page/edit_product.html";
      }
 
@@ -84,7 +102,6 @@ public class ProductController {
         reullt.setList(pageInfo.getList());
         reullt.setTotal(pageInfo.getTotal());
 
- //       System.out.println("pageInfo"+pageInfo);
         return  pageInfo;
     }
 

@@ -19,7 +19,7 @@
                 <div class="layui-inline" style="width: 30%">
                     <label class="layui-form-label">订单号：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" id="orderName" required lay-verify="required"
+                        <input type="text" name="title" id="oid" required lay-verify="required"
                                placeholder="请输入订单号" autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                 </div>
     </div>
     </form>
-    <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-tips="查询" id="cx"> 查询</button>
+    <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" style="margin-right: 100px" lay-tips="查询" id="cx"> 查询</button>
          <br><br>
 
         <div class="layui-form">
@@ -72,6 +72,7 @@
                     <th>收货人姓名</th>
                     <th>收货人电话</th>
                     <th>发货人id</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody id="tbs">
@@ -108,7 +109,7 @@
                 type: 'post',
                 dataType: 'json',
                 data: {
-                    page: 1,
+                    pn: 1,
                     pageSize: 10
                 },
                 url: '/orders/queryAll.do',
@@ -124,7 +125,7 @@
                                 type: 'post',
                                 dataType: 'json',
                                 data: {
-                                    page: obj.curr,
+                                    pn: obj.curr,
                                     pageSize: obj.limit
                                 },
                                 url: '/orders/queryAll.do',
@@ -145,6 +146,7 @@
         var state = $("#state").val();
         var telephone = $("#telephone").val();
         var name=$("#name").val();
+        alert(state)
         layui.use(['laypage', 'layer'], function () {
             var laypage = layui.laypage
                 , layer = layui.layer;
@@ -222,9 +224,7 @@
             htmlStr += '</td><td>';
             htmlStr += data.list[i].uid;
             htmlStr += '</td><td>';
-            htmlStr += '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="删除" lay-href="/product/delProdct?pid=' + data.list[i].pid + '"> 删除</a>\n' +
-                '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="编辑" lay-href="/product/edit?pid=' + data.list[i].pid + '">编辑</a>\n'
-
+            htmlStr += '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="编辑" lay-href="/orders/editOrder.do?oid=' + data.list[i].oid + '">编辑</a>'
         }
         $("#tbs ").append(htmlStr);
 
