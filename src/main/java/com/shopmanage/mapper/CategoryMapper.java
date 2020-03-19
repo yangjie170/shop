@@ -23,13 +23,18 @@ public interface CategoryMapper {
     List<CategoryBean> getAllCategory();
 
     @Insert("insert into category(cid,cname) values(#{cid},#{cname})")
-    CategoryBean addCategoryBean(CategoryBean categoryBean);
+    Integer addCategoryBean(CategoryBean categoryBean);
 
 
-    @Update("update category set cid=#{cid},cname=#{cname}")
-    CategoryBean updateCategoryBean(CategoryBean categoryBean);
+    @Update("update category set cname=#{cname} where cid=#{cid}")
+    Integer updateCategoryBean(CategoryBean categoryBean);
 
     @Delete("delete from category where cid=#{cid}")
     int deleteCategoryBean(String cid);
 
+    @Select("select *  from category where cname=#{cname}")
+    List<CategoryBean> getCategoryByName(CategoryBean categoryBean);
+
+    @Select("select *  from category where cid=#{cid}")
+    CategoryBean getCategory(String cid);
 }

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 /**
  * @author cp
  */
-@ Controller
+@Controller
 public class AdminController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody

@@ -26,7 +26,7 @@ public class ProductServiceImpl  implements ProductService {
     private ProductMapper productMapper;
 
     @Override
-    public List<ProductBean> queryProductByterm( String pname,Integer pdesc,Integer cid,Integer ishot) {
+    public List<ProductBean> queryProductByterm( String pname,Integer pdesc,String cid,Integer ishot) {
         StringBuilder sb =new StringBuilder(" 1= 1 AND  product.cid=category.cid");
         if(pname.length()>0) {
             sb.append(" AND ").append("pname like").append("'%").append(pname).append("%'");

@@ -5,16 +5,16 @@ import lombok.Data;
 @Data
 public class CategoryBean  extends BaseBean {
 
-    private  Integer cid;
+    private  String cid;
     private  String cname;
 
 
 
-    public Integer getCid() {
+    public String getCid() {
         return cid;
     }
 
-    public void setCid(Integer cid) {
+    public void setCid(String cid) {
         this.cid = cid;
     }
 

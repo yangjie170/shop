@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 /**************************************************
  * copyright (c) 2020, www.winan.com.cn All Rights Reserved.
@@ -28,17 +29,28 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryBean addCategoryBean(CategoryBean categoryBean) {
+    public Integer addCategoryBean(CategoryBean categoryBean) {
+        categoryBean.setCid(UUID.randomUUID().toString());
         return categoryMapper.addCategoryBean(categoryBean);
     }
 
     @Override
-    public CategoryBean updateCategoryBean(CategoryBean categoryBean) {
+    public Integer updateCategoryBean(CategoryBean categoryBean) {
         return categoryMapper.updateCategoryBean(categoryBean);
     }
 
     @Override
     public int deleteCategoryBean(String cid) {
         return categoryMapper.deleteCategoryBean(cid);
+    }
+
+    @Override
+    public List<CategoryBean> getCategoryByName(CategoryBean categoryBean) {
+        return categoryMapper.getCategoryByName(categoryBean);
+    }
+
+    @Override
+    public CategoryBean getCategory(String cid) {
+        return categoryMapper.getCategory(cid);
     }
 }

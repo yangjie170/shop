@@ -22,7 +22,7 @@ public class ProductBean extends CategoryBean{
     private Integer pdesc;
     private  Integer pflag;
     private  String detial;
-    private  Integer cid;
+    private  String cid;
 
 
 
@@ -107,12 +107,12 @@ public class ProductBean extends CategoryBean{
     }
 
     @Override
-    public Integer getCid() {
+    public String getCid() {
         return cid;
     }
 
     @Override
-    public void setCid(Integer cid) {
+    public void setCid(String cid) {
         this.cid = cid;
     }
 }
