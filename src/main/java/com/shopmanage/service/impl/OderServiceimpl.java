@@ -49,4 +49,9 @@ public class OderServiceimpl implements OderService {
     public OderBean editOrder(String oid) {
         return oderMapper.editOrder(oid);
     }
+
+    @Override
+    public List<OderBean> queryOrderByUid(int uid) {
+        return oderMapper.selectByUid(uid);
+    }
 }

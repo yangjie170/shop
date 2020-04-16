@@ -1,10 +1,7 @@
 package com.shopmanage.mapper;
 
 import com.shopmanage.entity.UserBean;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -70,11 +67,12 @@ public interface UserMapper {
     @Select("select * from user where username=#{username} and password=#{password}")
     UserBean login(String username, Integer password);
 
-    @Insert("insert into user(username,password,telephone)  values(#{username},#{password},#{telephone})")
-    UserBean register(UserBean user);
+    @Insert("insert into user(username,password,telephone) values (#{username},#{password},#{telephone})")
+    @Options(useGeneratedKeys = true,keyProperty = "uid",keyColumn = "user.uid")
+    int register(UserBean user);
 
 
     @Select("select * from user where username=#{username}")
-    UserBean existUser(UserBean user);
+    UserBean existUser(String username);
 
 }

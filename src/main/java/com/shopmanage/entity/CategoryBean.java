@@ -8,8 +8,6 @@ public class CategoryBean  extends BaseBean {
     private  Integer cid;
     private  String cname;
 
-
-
     public Integer getCid() {
         return cid;
     }

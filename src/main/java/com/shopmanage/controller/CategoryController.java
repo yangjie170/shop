@@ -1,10 +1,10 @@
 package com.shopmanage.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.shopmanage.entity.BlPageInfo;
-import com.shopmanage.entity.CategoryBean;
-import com.shopmanage.entity.ResponseBean;
+import com.shopmanage.entity.*;
+import com.shopmanage.entity.DTO.CategoryPrimary;
 import com.shopmanage.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**************************************************
  * copyright (c) 2020, www.winan.com.cn All Rights Reserved.
@@ -30,6 +29,7 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
 
 
     @RequestMapping("/getAllCategory")
@@ -86,6 +86,34 @@ public class CategoryController {
         return responseBean;
     }
 
+    @RequestMapping("/getCategory.do")
+    @ResponseBody
+    public Rsp getCategory(){
+        List<CategoryBean> list =  categoryService.getAllCategory();
+        List<CategoryPrimary> categoryPrimaryList = new ArrayList<>(Collections.emptyList());
+        for (CategoryBean c :list) {
+            CategoryPrimary categoryPrimary = new CategoryPrimary();
+            categoryPrimary.setCid(c.getCid());
+            categoryPrimary.setCname(c.getCname());
+            List<CategoryBean> list3 = new ArrayList<>(Collections.emptyList());
+            list3.add(c);
+            categoryPrimary.setChildren(list3);
+            categoryPrimaryList.add(categoryPrimary);
+        }
+        Rsp rsp =new Rsp();
+        rsp.setStatus(new Status(1,200,"请求成功"));
+        rsp.setData(categoryPrimaryList);
+        return rsp;
+    }
 
+    public static class Rsp extends Response{
+        private List<CategoryPrimary> data;
+        public List<CategoryPrimary> getData() {
+            return data;
+        }
+        public void setData(List<CategoryPrimary> data) {
+            this.data = data;
+        }
+        }
 
 }

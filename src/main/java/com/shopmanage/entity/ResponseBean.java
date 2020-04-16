@@ -6,12 +6,21 @@ import lombok.Data;
 @Data
 public class ResponseBean<T> {
 
+    int succeed;
     int code = 200;
     @JsonIgnore
     String message = "";
     @JsonIgnore
     String action = "";
     T data = null;
+
+    public int getSucceed() {
+        return succeed;
+    }
+
+    public void setSucceed(int succeed) {
+        this.succeed = succeed;
+    }
 
     public int getCode() {
         return code;

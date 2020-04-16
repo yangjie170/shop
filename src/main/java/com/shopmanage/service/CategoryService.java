@@ -1,6 +1,7 @@
 package com.shopmanage.service;
 
 import com.shopmanage.entity.CategoryBean;
+import com.shopmanage.entity.ProductBean;
 
 import java.util.List;
 
@@ -24,4 +25,5 @@ public interface CategoryService {
 
     int deleteCategoryBean(String cid);
 
+    List<ProductBean> getProductByCategory(int cid);
 }

@@ -27,4 +27,6 @@ public interface OderMapper {
     List<OderBean> selectAllOrder();
 
     OderBean editOrder(String oid);
+
+    List<OderBean> selectByUid(int uid);
 }

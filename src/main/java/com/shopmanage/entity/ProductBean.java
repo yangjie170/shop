@@ -24,7 +24,22 @@ public class ProductBean extends CategoryBean{
     private  String detial;
     private  Integer cid;
 
+    public ProductBean() {
+    }
 
+    public ProductBean(Integer pid, String pname, Integer markprice, Integer shopprice, String pimage, Date pdate, Integer ishot, Integer pdesc, Integer pflag, String detial, Integer cid) {
+        this.pid = pid;
+        this.pname = pname;
+        this.markprice = markprice;
+        this.shopprice = shopprice;
+        this.pimage = pimage;
+        this.pdate = pdate;
+        this.ishot = ishot;
+        this.pdesc = pdesc;
+        this.pflag = pflag;
+        this.detial = detial;
+        this.cid = cid;
+    }
 
     public Integer getPid() {
         return pid;

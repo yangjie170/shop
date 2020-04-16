@@ -14,7 +14,7 @@ public interface UserService {
 
     UserBean login(String username, Integer password);
 
-    UserBean register(UserBean user);
+    int register(UserBean user);
 
-    UserBean existUser(UserBean user);
+    UserBean existUser(String username);
 }

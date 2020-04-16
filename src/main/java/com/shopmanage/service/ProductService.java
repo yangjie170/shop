@@ -13,4 +13,6 @@ public interface ProductService {
   Integer updateProduct(ProductBean product);
   Integer delProduct(Integer pid);
   Integer addProduct(ProductBean product);
+
+  List<ProductBean> queryByCategoryId(Integer cid);
 }

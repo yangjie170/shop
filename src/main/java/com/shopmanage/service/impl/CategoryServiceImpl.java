@@ -1,6 +1,7 @@
 package com.shopmanage.service.impl;
 
 import com.shopmanage.entity.CategoryBean;
+import com.shopmanage.entity.ProductBean;
 import com.shopmanage.mapper.CategoryMapper;
 import com.shopmanage.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,4 +42,10 @@ public class CategoryServiceImpl implements CategoryService {
     public int deleteCategoryBean(String cid) {
         return categoryMapper.deleteCategoryBean(cid);
     }
+
+    @Override
+    public List<ProductBean> getProductByCategory(int cid) {
+        return categoryMapper.getProductByCategory(cid);
+    }
+
 }

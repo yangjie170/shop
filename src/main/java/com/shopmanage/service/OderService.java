@@ -23,4 +23,6 @@ public interface OderService {
     List<OderBean> selectAllOrder();
 
     OderBean editOrder(String oid);
+
+    List<OderBean> queryOrderByUid(int uid);
 }

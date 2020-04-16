@@ -51,13 +51,14 @@ public class UserServiceimpl implements UserService {
     }
 
     @Override
-    public UserBean register(UserBean user) {
+    public int register(UserBean user) {
+
         return userMapper.register(user);
     }
 
     @Override
-    public UserBean existUser(UserBean user) {
-        return userMapper.existUser(user);
+    public UserBean existUser(String username) {
+        return userMapper.existUser(username);
     }
 
 

@@ -63,4 +63,7 @@
         <result column="uid" property="uid"/>
     </resultMap>
 
+    <select id="selectByUid" resultType="com.shopmanage.entity.OderBean">
+        select * from orders where orders.uid = #{uid}
+    </select>
 </mapper>

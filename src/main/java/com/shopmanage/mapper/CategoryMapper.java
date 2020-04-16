@@ -1,10 +1,8 @@
 package com.shopmanage.mapper;
 
 import com.shopmanage.entity.CategoryBean;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import com.shopmanage.entity.ProductBean;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -31,5 +29,8 @@ public interface CategoryMapper {
 
     @Delete("delete from category where cid=#{cid}")
     int deleteCategoryBean(String cid);
+
+    @Select("select * from product where cid=#{cid}")
+    List<ProductBean> getProductByCategory(int cid);
 
 }

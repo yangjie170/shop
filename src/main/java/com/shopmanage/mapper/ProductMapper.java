@@ -3,6 +3,7 @@ package com.shopmanage.mapper;
 import com.shopmanage.entity.ProductBean;
 
 import org.apache.ibatis.annotations.*;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.List;
 
@@ -94,12 +95,10 @@ public interface ProductMapper {
               "where product.cid=category.cid  and pid=#{pid} order by pdate desc")
       ProductBean queryProductBypid(Integer pid);
 
-
-
-
-
-
-
+    @Select("select *"+
+            "from product"+
+            " where cid = #{cid}")
+    List<ProductBean> queryProductByCid(int cid);
 
 
 }
