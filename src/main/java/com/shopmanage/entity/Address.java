@@ -4,20 +4,21 @@ public class Address {
     private Integer id;
     private String consignee;
     private String email;
-    private String country_name;
     private Integer country;
-    private String province_name;
+    private String country_name;
     private Integer province;
-    private String city_name;
+    private String province_name;
     private Integer city;
-    private String district_name;
+    private String city_name;
     private Integer district;
+    private String district_name;
     private String address;
     private String zipcode;
     private String tel;
     private String mobile;
     private Integer default_address;
     private Integer uid;
+
 
     public Integer getUid() {
         return uid;
@@ -34,7 +35,6 @@ public class Address {
     public void setCountry(Integer country) {
         this.country = country;
     }
-
 
     public Integer getProvince() {
         return province;
@@ -154,5 +154,28 @@ public class Address {
 
     public void setDefault_address(Integer default_address) {
         this.default_address = default_address;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", consignee='" + consignee + '\'' +
+                ", email='" + email + '\'' +
+                ", country=" + country +
+                ", country_name='" + country_name + '\'' +
+                ", province=" + province +
+                ", province_name='" + province_name + '\'' +
+                ", city=" + city +
+                ", city_name='" + city_name + '\'' +
+                ", district=" + district +
+                ", district_name='" + district_name + '\'' +
+                ", address='" + address + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", tel='" + tel + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", default_address=" + default_address +
+                ", uid=" + uid +
+                '}';
     }
 }

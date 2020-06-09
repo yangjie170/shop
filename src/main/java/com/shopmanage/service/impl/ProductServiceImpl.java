@@ -84,8 +84,13 @@ public class ProductServiceImpl  implements ProductService {
     }
 
     @Override
-    public List<ProductBean> queryByCategoryId(Integer cid) {
-        return productMapper.queryProductByCid(cid);
+    public List<ProductBean> queryByCategoryId(Integer cid,String oder) {
+        return productMapper.queryProductByCid(cid,oder);
+    }
+
+    @Override
+    public List<ProductBean> selectByKey(String key, int cid,String order_by) {
+        return productMapper.queryProductByKeyWord(key,cid,order_by);
     }
 
 

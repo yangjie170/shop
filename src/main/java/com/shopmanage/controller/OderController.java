@@ -8,18 +8,20 @@ import com.github.pagehelper.PageInfo;
 import com.shopmanage.entity.*;
 import com.shopmanage.entity.DTO.OderBeanDTO;
 import com.shopmanage.service.*;
+import org.apache.logging.log4j.core.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.logging.SimpleFormatter;
 
-@Controller
+@RestController
 @RequestMapping("/orders")
+@Transactional
 public class OderController {
     @Autowired
     private OderService oderService;
@@ -41,14 +43,13 @@ public class OderController {
 
     //删,删除一个或多个不需要的订单从数据库中
     @DeleteMapping("/deletOrder.do")
-    @ResponseBody
-    public String deletOrder(int oid){
-        return "page/orders";
+    public String deletOrder(String oid){
+
+        return oderService.deletOrder(oid)>0?"true":"failed";
     }
 
     //改,特殊情况时修改订单的所有可修改信息
     @RequestMapping("/updateOrder.do")
-    @ResponseBody
     public ResponseBean updateOrder(OderBean oderBean){
         if(Objects.isNull(oderBean)){
             return null;
@@ -65,7 +66,6 @@ public class OderController {
     }
 
     //查询所有订单
-    @ResponseBody
     @RequestMapping("/queryAll.do")
     public BlPageInfo queryAll(ProductBean productBean,@RequestParam(defaultValue = "1",value = "pn") Integer page,@RequestParam(defaultValue = "10",value = "pageSize")Integer pageSize){
         PageHelper.startPage(page,pageSize);
@@ -78,7 +78,6 @@ public class OderController {
     }
 
     //查,管理人员可按条件查看满足条件的订单
-    @ResponseBody
     @RequestMapping("/selectByMap.do")
     public BlPageInfo selectByMap(OderBean oderBean,@RequestParam(defaultValue = "1",value = "pn") Integer page,@RequestParam(defaultValue = "10",value = "pageSize")Integer pageSize){
         PageHelper.startPage(page,pageSize);
@@ -91,7 +90,6 @@ public class OderController {
     }
 
     //模糊查,管理员无准确条件，可通过total模糊查询订单
-    @ResponseBody
     @RequestMapping("/selectLike")
     public List<OderBean> selectLike(int s){
         List<OderBean> list = oderService.selectLike(s);
@@ -106,7 +104,6 @@ public class OderController {
     }
 
     @RequestMapping("/queryOrderByUid")
-    @ResponseBody
     public Rsp getOrderByUid(@RequestParam Map<String,String> map){
 
         JSONObject jsonObject = JSON.parseObject(map.get("json"));
@@ -116,10 +113,12 @@ public class OderController {
        //List<OderBean> list = oderService.queryOrderByUid(session.getUid());
         OderBean oderBean = new OderBean();
         oderBean.setUid(session.getUid().toString());
-        oderBean.setState(type.equals("finished") ?1:0);
+        oderBean.setState(type.equals("finished")?1:0);
         List<OderBean> oderBeans = oderService.selectByMap(oderBean);
+        //根据付款状态的订单查询
         List<OderGoods> oderGoodsList =oderGoodsService.queryOderGoodsByOderState(Integer.toString(type.equals("finished")?1:0));
         List<OderGoods> oderGoodsList1 = new ArrayList<>();
+        //订单中货物查询
         for (OderGoods oderGoods : oderGoodsList){
             Picture picture = new Picture();
             String url=productService.queryProductBypid(oderGoods.getGoods_id()).getPimage();
@@ -135,7 +134,8 @@ public class OderController {
             OderBeanDTO oderBeanDTO = new OderBeanDTO();
             oderBeanDTO.initOderDTO(oderBean1);
             oderBeanDTO.setGoods_list(oderGoodsList1);
-            oderBeanDTO.setOrder_info(new OrderInfo("已付款",1,1,"w","312"));
+            oderBeanDTO.setOrder_info(new OrderInfo("已付款",1,1,"hzss","312"));
+            oderBeanDTO.setFormated_shipping_fee("123");
             list2.add(oderBeanDTO);
         }
 
@@ -146,46 +146,98 @@ public class OderController {
     }
 
     @RequestMapping("/done")
-    @ResponseBody
     public Rsp done(@RequestParam Map<String,String> map){
+
+        JSONObject jsonObject = JSON.parseObject(map.get("json"));
+        Session session = jsonObject.getObject("session",Session.class);
+
+        OderBean oderBean = new OderBean();
+
+        String oid = UUID.randomUUID().toString().replace("-", "").toUpperCase();
+        Date nowDate = new Date();
+        /*SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateNow = simpleDateFormat.format(nowDate);*/
+        List<Address> addresses = addressService.selectOneAddress(session.getUid());
+        Address address = addresses.get(0);
+        List<CarGoods> list = carService.selectAllCarGoods(session.getUid());
+        int total =0;
+        for (CarGoods c: list
+             ) {
+            total+=Integer.parseInt(c.getSubtotal());
+        }
+        oderBean.setState(0);
+        oderBean.setUid(session.getUid().toString());
+        oderBean.setTelephone(address.getMobile());
+        oderBean.setOrdertime(nowDate);
+        oderBean.setOid(oid);
+        oderBean.setAddress(address.getAddress());
+        oderBean.setTotal(total);
+        oderBean.setName(address.getAddress());
+
+
+        carService.deleteALlCarGoods(session.getUid());
+
+        oderService.addOrder(oderBean);
         Rsp rsp = new Rsp();
         rsp.setStatus(new Status(1,200,"请求成功"));
         return rsp;
     }
 
 
-    @ResponseBody
     @RequestMapping("/cancel")
     public Rsp cancel(@RequestParam Map<String,String> map){
+        JSONObject jsonObject = JSON.parseObject(map.get("json"));
+        String order_sn = jsonObject.getString("order_sn");
+        Session session = jsonObject.getObject("session",Session.class);
+
+        oderService.deletOrder(order_sn);
         Rsp rsp = new Rsp();
         rsp.setStatus(new Status(1,200,"请求成功"));
         return rsp;
     }
 
 
-    @ResponseBody
     @RequestMapping("/checkOrder")
     public RspCheck checkOrder(@RequestParam Map<String,String> map){
 
         JSONObject jsonObject = JSON.parseObject(map.get("json"));
-        Session session = JSONObject.toJavaObject(jsonObject,Session.class);
-        Address address = addressService.selectOneAddress(session.getUid());
+        Session session = jsonObject.getObject("session",Session.class);
+        System.out.println(session.toString());
         RspCheck rspCheck = new RspCheck();
         RspCheck.Data data = new RspCheck.Data();
-        data.setConsignee(address);
+        /*
+        * 测试
+        * */
+        List<Address> addresses = addressService.selectOneAddress(session.getUid());
+        Address address = addresses.get(0);
         List<Payment> paymentList = new ArrayList<>();
         List<Shipping> shippings = new ArrayList<>();
+        List<CartGoods> cartGoods = new ArrayList<>();
+        Picture picture = new Picture();
         for(int i = 1;i<5;i++){
             Payment payment = new Payment(i,"支付方式:"+i,"优惠："+i,"支付代码+"+i);
-            Shipping shipping = new Shipping(i,"shippingname:"+i,"fee :"+i);
             paymentList.add(payment);
+            Shipping shipping = new Shipping(i,"派送方式:"+i,""+i);
             shippings.add(shipping);
         }
-        List<CarGoods> carGoods = carService.selectAllCarGoods(session.getUid());
-        data.setGoodsList(carGoods);
-        data.setPaymentList(paymentList);
-        data.setShippingList(shippings);
+        List<CarGoods> list = carService.selectAllCarGoods(session.getUid());
+        for (CarGoods c: list
+             ) {
+            CartGoods cartGood = new CartGoods(c);
+            cartGoods.add(cartGood);
+            System.out.println(c.toString());
+        }
+ //       CarGoods carGoods1 = new CarGoods(1,1,1,"13r",1,"200","products/1/c_0014.jpg");
+        for (CartGoods c: cartGoods
+             ) {
+            System.out.println(c.toString());
+        }
+        data.setGoods_list(cartGoods);
+        data.setPayment_list(paymentList);
+        data.setShipping_list(shippings);
+        data.setConsignee(address);
         rspCheck.setData(data);
+
         rspCheck.setStatus(new Status(1,200,"请求成功"));
         return rspCheck;
     }
@@ -224,17 +276,17 @@ public class OderController {
         }
 
         public static class  Data{
-            private List<CarGoods> goodsList;
+            private List<CartGoods> goods_list;
             private Address consignee;
-            private List<Shipping> shippingList;
-            private List<Payment> paymentList;
+            private List<Shipping> shipping_list;
+            private List<Payment> payment_list;
 
-            public List<CarGoods> getGoodsList() {
-                return goodsList;
+            public List<CartGoods> getGoods_list() {
+                return goods_list;
             }
 
-            public void setGoodsList(List<CarGoods> goodsList) {
-                this.goodsList = goodsList;
+            public void setGoods_list(List<CartGoods> goods_list) {
+                this.goods_list = goods_list;
             }
 
             public Address getConsignee() {
@@ -245,20 +297,20 @@ public class OderController {
                 this.consignee = consignee;
             }
 
-            public List<Shipping> getShippingList() {
-                return shippingList;
+            public List<Shipping> getShipping_list() {
+                return shipping_list;
             }
 
-            public void setShippingList(List<Shipping> shippingList) {
-                this.shippingList = shippingList;
+            public void setShipping_list(List<Shipping> shipping_list) {
+                this.shipping_list = shipping_list;
             }
 
-            public List<Payment> getPaymentList() {
-                return paymentList;
+            public List<Payment> getPayment_list() {
+                return payment_list;
             }
 
-            public void setPaymentList(List<Payment> paymentList) {
-                this.paymentList = paymentList;
+            public void setPayment_list(List<Payment> payment_list) {
+                this.payment_list = payment_list;
             }
         }
 

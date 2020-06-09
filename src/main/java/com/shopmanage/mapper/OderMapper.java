@@ -1,6 +1,9 @@
 package com.shopmanage.mapper;
 
+import com.shopmanage.entity.DTO.UserDTO;
 import com.shopmanage.entity.OderBean;
+import com.shopmanage.entity.OrderNum;
+import com.shopmanage.entity.OrderNumber;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +15,7 @@ public interface OderMapper {
     int insertOrder(OderBean oderBean);
 
     //删除一个订单
-    int deleteOrder(int oid);
+    int deleteOrder(String oid);
 
     //修改一个订单
     int updateOrder(OderBean oderBean);
@@ -29,4 +32,7 @@ public interface OderMapper {
     OderBean editOrder(String oid);
 
     List<OderBean> selectByUid(int uid);
+
+    //登录时加载未完成订单，已完成订单
+    List<OrderNum> selectOderNumber(int uid);
 }

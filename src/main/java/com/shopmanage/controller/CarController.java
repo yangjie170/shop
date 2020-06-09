@@ -24,14 +24,14 @@ public class CarController {
 
     @RequestMapping("/create.do")
     @ResponseBody
-    public Rsp insertCarGoods(@RequestParam Map<String,String> map){
-        JSONObject jsonObject = JSONObject.parseObject(map.get("json"));
-        int good_id = Integer.parseInt(jsonObject.getString("goods_id"));
-        int number = Integer.parseInt(jsonObject.getString("number"));
-        Session session = JSONObject.toJavaObject(JSON.parseObject(jsonObject.getString("session")),Session.class);
-        ProductBean productBean =productService.queryProductBypid(good_id);
-        String total = Integer.toString(productBean.getShopprice()*number);
-        CarGoods carGoods = new CarGoods();
+        public Rsp insertCarGoods(@RequestParam Map<String,String> map){
+            JSONObject jsonObject = JSONObject.parseObject(map.get("json"));
+            int good_id = Integer.parseInt(jsonObject.getString("goods_id"));
+            int number = Integer.parseInt(jsonObject.getString("number"));
+            Session session = JSONObject.toJavaObject(JSON.parseObject(jsonObject.getString("session")),Session.class);
+            ProductBean productBean =productService.queryProductBypid(good_id);
+            String total = Integer.toString(productBean.getShopprice()*number);
+            CarGoods carGoods = new CarGoods();
         carGoods.setGoods_id(good_id);
         carGoods.setGoods_number(number);
         carGoods.setGoods_name(productBean.getPname());

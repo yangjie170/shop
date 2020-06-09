@@ -117,7 +117,8 @@ public class ProductController {
     @RequestMapping("/getProductByCategory")
     @ResponseBody
     public String getProductByCategory(Integer cid){
-        List list =productService.queryByCategoryId(cid);
+        String a = "desc";
+        List list =productService.queryByCategoryId(cid,a);
         String data= (String) JSON.toJSON(list);
         return data;
     }
@@ -140,6 +141,7 @@ public class ProductController {
         productDTO.initProduct(productBean);
         List<Picture> list = new ArrayList<>();
         list.add(picture);
+        list.add(picture);
         productDTO.setPictures(list);
         productDTO.setPicture(picture);
         rsp.setData(productDTO);
@@ -149,21 +151,19 @@ public class ProductController {
     @RequestMapping("/search.do")
     @ResponseBody
     public Rsp searchProduct(@RequestParam Map<String,String> map){
-        String s= null;
-        for (Map.Entry<String, String> entry:map.entrySet()){
-//            System.out.print("得到键为：==="+entry.getKey());
-//            System.out.println("得到值为：==="+entry.getValue());
-            s=entry.getValue();
-        }
-        JSONObject jsonObject = JSON.parseObject(s);
-        JSONObject j = JSONObject.parseObject(jsonObject.getString("filter"));
+        JSONObject jsonObject = JSONObject.parseObject(map.get("json"));
+        Filter filter = jsonObject.getObject("filter",Filter.class);
         JSONObject j1 = JSONObject.parseObject(jsonObject.getString("pagination"));
-        Filter filter = JSON.toJavaObject(j,Filter.class);
         Pagination pagination = JSON.toJavaObject(j1,Pagination.class);
         Rsp rsp = new Rsp();
         Paginated paginated = new Paginated();
         paginated.setCount(pagination.getCount());
-        List<ProductBean> list = productService.queryByCategoryId(filter.getCategory_id());
+        List<ProductBean> list = Collections.emptyList();
+        if (filter.getKeywords().equals("")){
+            list = productService.queryByCategoryId(filter.getCategory_id(), filter.getSort_by().equals("price_desc") ?"desc":"asc");
+        }else{
+            list = productService.selectByKey(filter.getKeywords(),filter.getCategory_id(),filter.getSort_by().equals("price_desc") ?"desc":"asc");
+        }
         List<ProductDTO> list1 = new java.util.ArrayList<>(Collections.emptyList());
         for (ProductBean productBean :list) {
             Picture picture = new Picture();
@@ -173,11 +173,14 @@ public class ProductController {
             ProductDTO productDTO = new ProductDTO();
             productDTO.setPicture(picture);
             productDTO.initProduct(productBean);
-//            System.out.println(productDTO.getPicture().toString());
             list1.add(productDTO);
         }
         paginated.setTotal(list1.size());
-        paginated.setMore(list1.size()/(pagination.getPage()*pagination.getCount())<1?1:0);
+        if (list1.size()<pagination.getCount()*pagination.getPage()){
+            paginated.setCount(list1.size());
+        }else {
+            paginated.setMore(list1.size()/(pagination.getPage()*pagination.getCount())<1?1:0);
+        }
         rsp.setData(list1);
         rsp.setStatus(new Status(1,200,"请求成功"));
         rsp.setPaginated(paginated);

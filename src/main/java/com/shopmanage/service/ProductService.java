@@ -14,5 +14,7 @@ public interface ProductService {
   Integer delProduct(Integer pid);
   Integer addProduct(ProductBean product);
 
-  List<ProductBean> queryByCategoryId(Integer cid);
+  List<ProductBean> queryByCategoryId(Integer cid,String oder);
+
+  List<ProductBean> selectByKey(String key,int cid,String order_by);
 }

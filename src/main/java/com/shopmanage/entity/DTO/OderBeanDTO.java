@@ -10,6 +10,7 @@ public class OderBeanDTO extends OderBean {
     private List<OderGoods> goods_list;
     private OrderInfo order_info;
     private String formated_shipping_fee;
+    private String order_sn;
 
     public OderBeanDTO() {
     }
@@ -23,6 +24,7 @@ public class OderBeanDTO extends OderBean {
         this.setOrdertime(oderBean.getOrdertime());
         this.setTelephone(oderBean.getTelephone());
         this.setTotal(oderBean.getTotal());
+        this.order_sn=oderBean.getOid();
     }
     public OderBeanDTO(List<OderGoods> goods_list, OrderInfo order_info, String formated_shipping_fee) {
         this.goods_list = goods_list;
@@ -52,6 +54,14 @@ public class OderBeanDTO extends OderBean {
 
     public void setOrder_info(OrderInfo order_info) {
         this.order_info = order_info;
+    }
+
+    public String getOrder_sn() {
+        return order_sn;
+    }
+
+    public void setOrder_sn(String order_sn) {
+        this.order_sn = order_sn;
     }
 }
 

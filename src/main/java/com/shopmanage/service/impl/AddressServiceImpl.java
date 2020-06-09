@@ -22,8 +22,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public int updateAddress(int id) {
-        return addressMapper.updateAddress(id);
+    public int updateAddress(Address address) {
+        return addressMapper.updateAddress(address);
     }
 
     @Override
@@ -32,7 +32,12 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address selectOneAddress(int id) {
-        return addressMapper.selectOneAddress(id);
+    public List<Address> selectOneAddress(int uid) {
+        return addressMapper.selectOneAddress(uid);
+    }
+
+    @Override
+    public Address selectOneAddressBySid(int sid) {
+        return addressMapper.selectOneAddressBySid(sid);
     }
 }

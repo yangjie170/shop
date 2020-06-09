@@ -7,7 +7,7 @@
    <insert id="insertOrder" parameterType="com.shopmanage.entity.OderBean">
        insert into orders values (#{oid},#{ordertime},#{total},#{state},#{address},#{name},#{telephone},#{uid})
    </insert>
-    <delete id="deleteOrder">
+    <delete id="deleteOrder" parameterType="string">
         delete from orders where oid = #{oid}
     </delete>
 
@@ -66,4 +66,13 @@
     <select id="selectByUid" resultType="com.shopmanage.entity.OderBean">
         select * from orders where orders.uid = #{uid}
     </select>
+
+    <select id="selectOderNumber"  resultMap="orderMap">
+        select state,count(*) c from orders  where uid = #{uid} group by state
+    </select>
+
+    <resultMap id="orderMap" type="com.shopmanage.entity.OrderNum">
+        <result column="state" property="state"/>
+        <result column="c" property="count"/>
+    </resultMap>
 </mapper>

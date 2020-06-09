@@ -1,40 +1,40 @@
 package com.shopmanage.entity;
 
 public class Shipping {
-    private int shipping;
-    private String shippingName;
-    private String fromat_shipping_fee;
+    private int shipping_id;
+    private String shipping_name;
+    private String format_shipping_fee;
 
     public Shipping() {
     }
 
-    public Shipping(int shipping, String shippingName, String fromat_shipping_fee) {
-        this.shipping = shipping;
-        this.shippingName = shippingName;
-        this.fromat_shipping_fee = fromat_shipping_fee;
+    public Shipping(int shipping_id, String shipping_name, String format_shipping_fee) {
+        this.shipping_id = shipping_id;
+        this.shipping_name = shipping_name;
+        this.format_shipping_fee = format_shipping_fee;
     }
 
-    public int getShipping() {
-        return shipping;
+    public int getShipping_id() {
+        return shipping_id;
     }
 
-    public void setShipping(int shipping) {
-        this.shipping = shipping;
+    public void setShipping_id(int shipping_id) {
+        this.shipping_id = shipping_id;
     }
 
-    public String getShippingName() {
-        return shippingName;
+    public String getShipping_name() {
+        return shipping_name;
     }
 
-    public void setShippingName(String shippingName) {
-        this.shippingName = shippingName;
+    public void setShipping_name(String shipping_name) {
+        this.shipping_name = shipping_name;
     }
 
-    public String getFromat_shipping_fee() {
-        return fromat_shipping_fee;
+    public String getFormat_shipping_fee() {
+        return format_shipping_fee;
     }
 
-    public void setFromat_shipping_fee(String fromat_shipping_fee) {
-        this.fromat_shipping_fee = fromat_shipping_fee;
+    public void setFormat_shipping_fee(String format_shipping_fee) {
+        this.format_shipping_fee = format_shipping_fee;
     }
 }

@@ -1,12 +1,15 @@
 package com.shopmanage.service.impl;
 
 import com.shopmanage.entity.OderBean;
+import com.shopmanage.entity.OrderNum;
+import com.shopmanage.entity.OrderNumber;
 import com.shopmanage.mapper.OderMapper;
 import com.shopmanage.service.OderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OderServiceimpl implements OderService {
@@ -21,7 +24,7 @@ public class OderServiceimpl implements OderService {
     }
 
     @Override
-    public int deletOrder(int oid) {
+    public int deletOrder(String oid) {
         return oderMapper.deleteOrder(oid);
     }
 
@@ -53,5 +56,10 @@ public class OderServiceimpl implements OderService {
     @Override
     public List<OderBean> queryOrderByUid(int uid) {
         return oderMapper.selectByUid(uid);
+    }
+
+    @Override
+    public List<OrderNum> selectOrderNum(int uid) {
+        return oderMapper.selectOderNumber(uid);
     }
 }

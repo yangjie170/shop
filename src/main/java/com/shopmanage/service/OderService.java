@@ -1,6 +1,8 @@
 package com.shopmanage.service;
 
 import com.shopmanage.entity.OderBean;
+import com.shopmanage.entity.OrderNum;
+import com.shopmanage.entity.OrderNumber;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +14,7 @@ public interface OderService {
     //增加一个订单
     int addOrder(OderBean oderBean);
     //删
-    int deletOrder(int oid);
+    int deletOrder(String oid);
     //改
     int updateOrder(OderBean oderBean);
     //条件查
@@ -25,4 +27,6 @@ public interface OderService {
     OderBean editOrder(String oid);
 
     List<OderBean> queryOrderByUid(int uid);
+
+    List<OrderNum> selectOrderNum(int uid);
 }

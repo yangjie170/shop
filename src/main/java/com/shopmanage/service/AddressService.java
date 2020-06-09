@@ -7,7 +7,8 @@ import java.util.List;
 public interface AddressService {
     int addAddress(Address address);
     int deleteAddress(int id);
-    int updateAddress(int id);
+    int updateAddress(Address address);
     List<Address> selectAllAddress(int id);
-    Address selectOneAddress(int id);
+    List<Address> selectOneAddress(int uid);
+    Address selectOneAddressBySid(int sid);
 }

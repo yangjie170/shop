@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CarServiceImpl implements CarService {
 
+
     @Autowired
     private CarMapper carMapper;
 
@@ -21,6 +22,11 @@ public class CarServiceImpl implements CarService {
     @Override
     public int deleteCargoods(int rec_id) {
         return carMapper.deleteCargoods(rec_id);
+    }
+
+    @Override
+    public int deleteALlCarGoods(int uid) {
+        return carMapper.deleteAllCarGoodsByUid(uid);
     }
 
 

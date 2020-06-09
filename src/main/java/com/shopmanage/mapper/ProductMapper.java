@@ -1,5 +1,6 @@
 package com.shopmanage.mapper;
 
+import com.shopmanage.entity.Filter;
 import com.shopmanage.entity.ProductBean;
 
 import org.apache.ibatis.annotations.*;
@@ -97,8 +98,10 @@ public interface ProductMapper {
 
     @Select("select *"+
             "from product"+
-            " where cid = #{cid}")
-    List<ProductBean> queryProductByCid(int cid);
+            " where cid = #{cid}" +
+            " ORDER BY shop_price ${order_by}")
+    List<ProductBean> queryProductByCid(int cid, String order_by);
 
-
+    @Select("select * from product where cid=#{cid} and pname like CONCAT('%',#{key},'%') order by shop_price ${order_by}")
+    List<ProductBean> queryProductByKeyWord(String key,int cid,String order_by);
 }

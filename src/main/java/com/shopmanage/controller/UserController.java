@@ -16,9 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Api(tags ="UserController",description = "用户信息")
 @Slf4j
@@ -121,24 +119,70 @@ public class UserController {
         JSON json = JSON.parseObject(map.get("json"));
         System.out.println(json);
         UserBean user = JSONObject.toJavaObject(json,UserBean.class);
-
         //创建一个响应实例
         Rsp result = new Rsp();
         if(user.getUsername()==null||user.getPassword()==null){
             result.setStatus(new Status(0,444,"用户名和密码不能为空"));
         }
         UserBean loginUser = userService.login(user.getUsername(), user.getPassword());
+        OrderNumber oderNum = new OrderNumber();
         if(loginUser!=null){
             List<OderBean> o = oderService.queryOrderByUid(loginUser.getUid());
-            UserDTO userDTO = new UserDTO(new UserDTO.OderNum(1,1,1,2),loginUser);
+            List<OrderNum> orderNums = oderService.selectOrderNum(loginUser.getUid());
+            Map<Integer,Integer> map1 = new HashMap<>();
+            for (OrderNum orderNum:orderNums) {
+                map1.put(orderNum.getState(),orderNum.getCount());
+            }
+            int await_pay = 0;
+            int finished= 0;
+            if(orderNums.size()>0){
+                try{
+                    await_pay = map1.get(0);
+                    finished = map1.get(1);
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                    finished =0;
+                }
+            }
+            oderNum.initNum(await_pay,await_pay,finished,finished);
+            UserDTO userDTO = new UserDTO(loginUser,oderNum);
             result.setData(new Rsp.Data(new Session(loginUser.getUid(),session.getId()),userDTO));
             result.setStatus(new Status(1,200,"登录成功"));
         }else {
-            result.setStatus(new Status(0,333,"用户名或密码错误，请重试"));
+            result.setStatus(new Status(0,404,"用户名或密码错误，请重试"));
         }
         return result;
     }
 
+    @ResponseBody
+    @RequestMapping("/info")
+    public Rsp userInfo(@RequestParam Map<String,String> map){
+
+        JSONObject jsonObject = JSON.parseObject(map.get("json"));
+        Session session = jsonObject.getObject("session",Session.class);
+        OrderNumber oderNum = new OrderNumber();
+        List<OrderNum> orderNums = oderService.selectOrderNum(session.getUid());
+        Map<Integer,Integer> map1 = new HashMap<>();
+        for (OrderNum orderNum:orderNums) {
+            map1.put(orderNum.getState(),orderNum.getCount());
+        }
+        int await_pay = 0;
+        int finished= 0;
+        if(orderNums.size()>0){
+            try{
+                await_pay = map1.get(0);
+                finished = map1.get(1);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+                finished =0;
+            }
+        }
+        oderNum.initNum(await_pay,await_pay,finished,finished);
+        Rsp rsp = new Rsp();
+        rsp.setData(new Rsp.Data(session,new UserDTO(userService.getUserByuId(session.getUid()),oderNum)));
+        rsp.setStatus(new Status(1,200,"请求成功"));
+        return rsp;
+    }
 
     @RequestMapping("/register.do")
     @ResponseBody
@@ -163,12 +207,31 @@ public class UserController {
             result.setMessage(i==1?"注册成功":"注册失败");
             rsp.setStatus(new Status(1,200,"请求成功"));
             Session session1 = new Session(registerUser.getUid(),session.getId());
-            UserDTO userDTO = new UserDTO(new UserDTO.OderNum(1,2,3,4),registerUser);
+            OrderNumber oderNum = new OrderNumber();
+            UserDTO userDTO = new UserDTO(registerUser,oderNum);
             rsp.setData(new Rsp.Data(session1, userDTO));
         }else {
             rsp.setStatus(new Status(1,200,"请求成功"));
             Session session1 = new Session(isExist.getUid(),session.getId());
-            UserDTO userDTO = new UserDTO(new UserDTO.OderNum(1,1,1,1),isExist);
+            OrderNumber oderNum = new OrderNumber();
+            List<OrderNum> orderNums= oderService.selectOrderNum(isExist.getUid());
+            Map<Integer,Integer> map1 = new HashMap<>();
+            for (OrderNum orderNum:orderNums) {
+                map1.put(orderNum.getState(),orderNum.getCount());
+            }
+            int await_pay = 0;
+            int finished= 0;
+            if(orderNums.size()>0){
+                try{
+                    await_pay = map1.get(0);
+                    finished = map1.get(1);
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                    finished =0;
+                }
+            }
+            oderNum.initNum(await_pay,await_pay,finished,finished);
+            UserDTO userDTO = new UserDTO(isExist,oderNum);
             rsp.setData(new Rsp.Data(session1,userDTO));
         }
         return rsp;
@@ -207,6 +270,19 @@ public class UserController {
                 this.user = user;
             }
         }
+    }
+
+    public static List<Integer> add(List<Integer> list){
+        List<Integer> chushihuaList = Arrays.asList(0,0);
+        if (list.size()==0){
+            return chushihuaList;
+        }
+        int i = list.size()-1;
+        for (Integer integer : list) {
+            chushihuaList.set(i, integer);
+            i--;
+        }
+        return chushihuaList;
     }
 
 }

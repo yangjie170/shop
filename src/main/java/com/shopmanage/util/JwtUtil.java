@@ -1,6 +1,5 @@
 package com.shopmanage.util;
 
-import com.mysql.cj.util.StringUtils;
 import com.shopmanage.entity.UserBean;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -41,4 +41,7 @@ public interface CarMapper {
     })
     @Select("select * from car where rec_id = #{rec_id}")
     CarGoods selectOneRec(int rec_id);
+
+    @Delete("Delete from car where uid = #{uid}")
+    int deleteAllCarGoodsByUid(int uid);
 }

@@ -28,7 +28,7 @@ public class HomeController {
         RspBanner rspBanner = new RspBanner();
         List<Banner> banners = new ArrayList<>();
         List<ProductDTO> productDTOS = new LinkedList<>();
-        List<ProductBean> list = productService.queryByCategoryId(1);
+        List<ProductBean> list = productService.queryByCategoryId(1,"desc");
         //促销商品
         for (ProductBean productBean :list){
             Picture picture = new Picture();
@@ -42,7 +42,8 @@ public class HomeController {
         }
 
         //轮播图
-        List<ProductBean> list1 = productService.queryByCategoryId(2);
+
+        List<ProductBean> list1 = productService.queryByCategoryId(2,"desc");
         for (ProductBean p: list1) {
             Banner banner = new Banner();
             Picture picture = new Picture();
@@ -67,9 +68,10 @@ public class HomeController {
         //首页数据
         List<CategoryBean> categoryBeans = categoryService.getAllCategory();
         List<CategoryHome> list1 = new ArrayList<>(Collections.emptyList());
+        String a ="desc";
         for (CategoryBean c : categoryBeans) {
             CategoryHome categoryHome = new CategoryHome();
-            List<ProductBean> productBeans = productService.queryByCategoryId(c.getCid());
+            List<ProductBean> productBeans = productService.queryByCategoryId(c.getCid(),a);
             List<ProductDTO> list = new ArrayList<>();
             for (ProductBean p :productBeans) {
                 ProductDTO productDTO = new ProductDTO();
