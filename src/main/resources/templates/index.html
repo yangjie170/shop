@@ -84,7 +84,6 @@
                             <i class="layui-icon layui-icon-set"></i>
                             <cite>用户管理</cite>
                         </a>`
-
                     </li>
                 </ul>
             </div>
@@ -128,23 +127,6 @@
 <script>
     layui.use(['layer', 'form'], function () {
         var form = layui.form;});
-    $("#search").click(function () {
-
-        var type=$("#tesetSelect").find("option:selected").val();
-        var keyword=$("#keyword").val();
-
-        var searchView = document.createElement('a');
-        searchView.setAttribute('lay-href', "/data/search?type=" + type + "&keyword=" + keyword);
-        searchView.setAttribute('lay-text', "搜索");
-        searchView.setAttribute('id', 'searchView');
-
-        document.body.appendChild(searchView);
-        searchView.click();
-
-
-        document.body.removeChild(document.getElementById('searchView'));
-    })
-
 </script>
 </body>
 

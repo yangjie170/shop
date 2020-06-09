@@ -39,6 +39,7 @@
                 <label class="layui-form-label">商品类型：</label>
                 <div class="layui-input-block" >
                     <select name="type" lay-filter="aihao" id="type">
+                        <option value="请选择..."  selected></option>
                         <th:block th:each="category:${categorys}" >
                             <option th:value="${category.cid}" th:text="${category.cname}"></option>
                         </th:block >

@@ -21,6 +21,8 @@
                             placeholder="请输入分类名" autocomplete="off" class="layui-input">
                 </div>
             </div>
+            <a type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-tips="查询" id="cx">查询</a>
+            <a type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-tips="添加" id="add">添加</a>
             <br><br>
             <div class="layui-form">
                 <table class="layui-table" lay-even lay-skin="nob">
@@ -39,7 +41,7 @@
                 </table>
 
             </div>
-            <a type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-tips="添加" id="add"> 添加</a>
+
             <div id="demo8"></div>
         </div>
     </div>
@@ -102,6 +104,9 @@
 
     $("#cx").click(function () {
         var cname = $("#cname").val();
+        if(cname==""){
+            queryclass();
+        }else {
         layui.use(['laypage', 'layer'], function () {
             var laypage = layui.laypage
                 , layer = layui.layer;
@@ -113,13 +118,12 @@
             $.ajax({
                 type: 'post',
                 dataType: 'json',
-
                 data: {
                     cname: cname,
                     pn: 1,
                     pageSize: 10
                 },
-                url: '/category/getAllCategory',
+                url: '/category/getCategoryByName',
                 success: function (data) {
 
                     showData(data);
@@ -137,7 +141,7 @@
                                     pn: obj.curr,
                                     pageSize: obj.limit
                                 },
-                                url: '/category/getAllCategory',
+                                url: '/category/getCategoryByName',
                                 success: function (data) {
                                     showData(data);
                                     layer.close(loading);
@@ -148,21 +152,21 @@
 
                 }
             })
-        });
+        });}
 
     })
     $("#add").click(function () {
         layer.open({
             type:1,
             title:'新增',
-            area:['500px','400px'],
+            area:['350px','250px'],
             btn:true,
 // shade: false,
             shadeClose: true,
             maxmin:false,
             content:"<form class=\"layui-form\" action=\"\">\n" +
                 "    <div class=\"layui-form-item\">\n" +
-                "        <div class=\"layui-inline\" style=\"width: 30%\">\n" +
+                "        <div class=\"layui-inline\">\n" +
                 "            <label class=\"layui-form-label\">分类名：</label>\n" +
                 "            <div class=\"layui-input-block\">\n" +
                 "                <input type=\"text\" name=\"title\" id=\"classname\" required lay-verify=\"required\"\n" +
@@ -174,7 +178,22 @@
             zIndex:layer.zIndex
             ,btn: ['保存'],
             yes: function(index, layero){
-              alert($("#classname").val())
+               let cname=$("#classname").val()
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        cname: cname,
+                    },
+                    url: '/category/addCategoryBean',
+                    success: function (data){
+                        if(data.code==200){
+                            alert("保存成功")
+                        }else {
+                            alert("分类名不能为空")
+                        }
+                    }
+                })
                 layer.close(index);
             }
         });
@@ -189,7 +208,7 @@
             htmlStr += '<tr><td>';
             htmlStr += data.list[i].cname;
             htmlStr += '</td><td>';
-            htmlStr += '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="编辑" lay-href="/category/updateCategoryBean?cid=' + data.list[i].cid + '">编辑</a>';
+            htmlStr += '<a type="button" class="layui-btn layui-btn-normal layui-btn-sm"lay-tips="编辑" lay-href="/category/edit?cid=' + data.list[i].cid + '">编辑</a>';
 
         }
         $("#tbs ").append(htmlStr);

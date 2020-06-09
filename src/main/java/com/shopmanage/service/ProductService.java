@@ -7,7 +7,7 @@ import com.shopmanage.entity.ProductBean;
 import java.util.List;
 
 public interface ProductService {
-  List<ProductBean> queryProductByterm( String pname,Integer pdesc,Integer cid ,Integer ishot);
+  List<ProductBean> queryProductByterm( String pname,Integer pdesc,String cid ,Integer ishot);
   PageInfo<ProductBean> getListProduct(Integer page,Integer pageSize);
   ProductBean queryProductBypid(Integer pid);
   Integer updateProduct(ProductBean product);

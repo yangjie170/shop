@@ -8,6 +8,7 @@ import com.shopmanage.entity.DTO.CategoryPrimary;
 import com.shopmanage.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,19 +46,49 @@ public class CategoryController {
         return blPageInfo;
     }
 
+    @RequestMapping("/getCategoryByName")
+    @ResponseBody
+    public BlPageInfo getCategoryByName(@RequestParam(value="pn",defaultValue="1")Integer pn,
+                                     @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize,CategoryBean categoryBean) {
+        PageHelper.startPage(pn,pageSize);
+        List<CategoryBean> data = categoryService.getCategoryByName(categoryBean);
+        PageInfo<CategoryBean> objectPageInfo = new PageInfo<>(data);
+        BlPageInfo blPageInfo =new BlPageInfo();
+        blPageInfo.setTotal(objectPageInfo.getTotal());
+        blPageInfo.setList(objectPageInfo.getList());
+        return blPageInfo;
+    }
+
+
     @RequestMapping("/addCategoryBean")
     @ResponseBody
     public ResponseBean addCategoryBean(CategoryBean categoryBean) {
-        if(Objects.isNull(categoryBean)){
-            return  null;
-        }
         ResponseBean<CategoryBean> result = new ResponseBean<>();
-        CategoryBean categoryBean1 = categoryService.addCategoryBean(categoryBean);
-        if(!Objects.isNull(categoryBean1)){
+        if(categoryBean.getCname()==null||categoryBean.getCname()==""){
+            result.setCode(400);
+            result.setMessage("分类名不能为空");
+        }else {
+        Integer categoryBean1 = categoryService.addCategoryBean(categoryBean);
+        if(categoryBean1==0){
             result.setCode(400);
         }
+}
         return result;
     }
+
+
+    @RequestMapping("/edit")
+    public String edit(String cid, Model model) {
+        if(cid!=null){
+            CategoryBean categoryBean =categoryService.getCategory(cid);
+            model.addAttribute("category",categoryBean);
+        }
+        return "page/edit_product_class";
+    }
+
+
+
+
 
     @RequestMapping("/updateCategoryBean")
     @ResponseBody
@@ -66,8 +97,8 @@ public class CategoryController {
             return  null;
         }
         ResponseBean<CategoryBean> result = new ResponseBean<>();
-        CategoryBean updateCategoryBean = categoryService.updateCategoryBean(categoryBean);
-        if(!Objects.isNull(updateCategoryBean)){
+        Integer data = categoryService.updateCategoryBean(categoryBean);
+        if(data==null||data==0){
             result.setCode(400);
         }
         return result;

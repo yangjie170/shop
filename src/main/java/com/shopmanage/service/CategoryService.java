@@ -17,13 +17,19 @@ public interface CategoryService {
 
     List<CategoryBean> getAllCategory();
 
-    CategoryBean addCategoryBean(CategoryBean categoryBean);
+    Integer addCategoryBean(CategoryBean categoryBean);
 
 
-    CategoryBean updateCategoryBean(CategoryBean categoryBean);
+    Integer updateCategoryBean(CategoryBean categoryBean);
 
 
     int deleteCategoryBean(String cid);
 
+<<<<<<< HEAD
     List<ProductBean> getProductByCategory(int cid);
+=======
+    List<CategoryBean> getCategoryByName(CategoryBean categoryBean);
+
+    CategoryBean getCategory(String cid);
+>>>>>>> 58f68ddbf6c10b69a1fe5db603d4565c08ff0594
 }
